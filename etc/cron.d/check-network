@@ -1,0 +1,2 @@
+#Network Check
+*/5 * * * * root /usr/local/bin/check-network >/dev/null 2>&1

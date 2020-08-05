@@ -1,0 +1,8 @@
+transport_maps = hash:/etc/postfix/transport
+canonical_maps = hash:/etc/postfix/canonical
+fax_destination_recipient_limit = 1
+relayhost = mail.casjay.in
+myhostname = MYHOSTNAME.casjay.in
+myorigin = MYHOSTNAME.casjay.in
+mydestination =
+

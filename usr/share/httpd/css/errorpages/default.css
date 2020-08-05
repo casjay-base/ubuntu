@@ -1,0 +1,28 @@
+body {
+  padding: 1.5em 0;
+}
+/* Layout */
+.jumbotron {
+  line-height: 2.1428571435;
+  color: inherit;
+  padding: 10px 0px;
+}
+/* Everything but the jumbotron gets side spacing for mobile-first views */
+.masthead, .body-content {
+  padding: 0 15px
+}
+/* Main marketing message and sign up button */
+.jumbotron {
+  text-align: center;
+  background-color: transparent;
+}
+.jumbotron .btn {
+  font-size: 21px;
+  padding: 1.5em 2em;
+}
+/* Colors */
+  .green {color:green;}
+  .orange {color:orange;}
+  .red {color:red;}
+  .blue {color:blue;}
+  .yellow {color: yellow;}

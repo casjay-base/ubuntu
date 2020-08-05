@@ -1,0 +1,2 @@
+#Lets have fortune and cowsay create an motd file every hour
+15 * * * * root cat /etc/casjaysdev/messages/legal.txt > /etc/issue && /usr/games/fortune | /usr/games/cowsay > /etc/motd && echo -e "\n\n" >> /etc/motd

@@ -1,0 +1,11 @@
+#!/bin/sh
+SYSLOGDIR=/var/log
+
+if [ -f /etc/cron.daily/logrotate ]; then rm -f /etc/cron.daily/logrotate ; fi
+
+logrotate -f /etc/logrotate.conf > /dev/null 2>&1
+
+/bin/rm -Rf $SYSLOGDIR/bandwidth > /dev/null
+/bin/rm -Rf $SYSLOGDIR/*.{0,1,2,3,4,5,6,7,8,9} $SYSLOGDIR/*/*.{0,1,2,3,4,5,6,7,8,9} $SYSLOGDIR/*/*/*.{0,1,2,3,4,5,6,7,8,9} > /dev/null
+/bin/rm -Rf $SYSLOGDIR/*.gz $SYSLOGDIR/*/*.gz $SYSLOGDIR/*/*/*.gz > /dev/null
+/bin/rm -Rf $SYSLOGDIR/*.old $SYSLOGDIR/*/*.old $SYSLOGDIR/*/*/*.old > /dev/null

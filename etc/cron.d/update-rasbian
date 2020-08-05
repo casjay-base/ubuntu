@@ -1,0 +1,2 @@
+#Update config from github
+#11 * * * * root update=yes bash -c "$(wget -qO - https://github.com/casjay-base/ubuntu/raw/master/install.sh)" >/dev/null 2>&1

@@ -1,0 +1,38 @@
+# Package generated configuration file
+Port 22
+Protocol 2
+HostKey /etc/ssh/ssh_host_rsa_key
+HostKey /etc/ssh/ssh_host_dsa_key
+HostKey /etc/ssh/ssh_host_ecdsa_key
+HostKey /etc/ssh/ssh_host_ed25519_key
+
+UsePrivilegeSeparation yes
+KeyRegenerationInterval 3600
+
+SyslogFacility AUTH
+LogLevel INFO
+
+LoginGraceTime 120
+PermitRootLogin yes
+StrictModes no
+
+IgnoreRhosts yes
+
+PermitEmptyPasswords no
+
+PasswordAuthentication yes
+
+X11Forwarding yes
+X11DisplayOffset 10
+PrintMotd no
+PrintLastLog yes
+TCPKeepAlive yes
+#UseLogin no
+
+#MaxStartups 10:30:60
+Banner /etc/issue
+
+AcceptEnv LANG LC_*
+
+Subsystem sftp /usr/lib/openssh/sftp-server
+UsePAM yes

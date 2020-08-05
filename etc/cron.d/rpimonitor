@@ -1,0 +1,5 @@
+# run every 30 minutes with 8 minute offset to update local repository database
+#*/8,38 * * * * root /usr/bin/apt-get update > /dev/null 2>&1
+
+# run every 30 minutes with 8 minute offsetto update status
+#*/3,3 * * * * root /usr/share/rpimonitor/scripts/updatePackagesStatus.pl > /dev/null 2>&1
