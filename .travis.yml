@@ -1,27 +1,20 @@
-# For more information about the configurations used
-# in this file, please see the Travis CI documentation.
-# .travis.yml
 # https://docs.travis-ci.com
+
 sudo: required
 language: bash
 
-env:
-  matrix:
-  - OS_TYPE=ubuntu OS_VERSION=focal
-  
-services:
-  - docker
-  
-before_install:
-  - sudo apt-get update -q
-  - echo 'DOCKER_OPTS="-H tcp://127.0.0.1:2375 -H unix:///var/run/docker.sock -s devicemapper"' | sudo tee /etc/default/docker > /dev/null
-  - sudo service docker restart; sleep 5
-  - sudo docker run --privileged -it -v /sys/fs/cgroup:/sys/fs/cgroup -d --name=ubuntu -e TZ=America/New_York -e PATH=$PATH --restart always --entrypoint /sbin/init centos:7
+jobs:
+  include:
+    - os: linux
+      dist: focal
+      before_install: sudo apt-get update
+      arch:
+        - amd64
   
 script:
-  - sudo docker exec -it ubuntu bash -c "sudo apt update; sudo apt upgrade -yy"
-  - sudo docker exec -it ubuntu bash -c "$(curl -LSs https://github.com/systemmgr/installer/raw/master/install.sh)" && systemmgr install installer
-  - sudo docker exec -it ubuntu bash -c "$(curl -LSs https://github.com/casjay/ubuntu/raw/master/install.sh)"
+  - sudo bash -c "sudo apt update; sudo apt upgrade -yy"
+  - sudo bash -c "$(curl -LSs https://github.com/systemmgr/installer/raw/master/install.sh)" && systemmgr install installer
+  - sudo bash -c "$(curl -LSs https://github.com/casjay/ubuntu/raw/master/install.sh)"
 
 notifications:
   email:
