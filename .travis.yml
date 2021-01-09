@@ -1,29 +1,28 @@
 # For more information about the configurations used
 # in this file, please see the Travis CI documentation.
-#
+# .travis.yml
 # https://docs.travis-ci.com
+sudo: required
+language: bash
 
-sudo: enabled
-
-matrix:
-  include:
-
-    - os: linux
-      dist: bionic
-      language: bash
-      sudo: enabled
-
-
-#    - os: osx
-#      osx_image: xcode11.2
-#      language: bash
-#      sudo: enabled
+env:
+  matrix:
+  - OS_TYPE=ubuntu OS_VERSION=focal
+  
+services:
+  - docker
+  
+before_install:
+  - sudo apt-get update -q
+  - echo 'DOCKER_OPTS="-H tcp://127.0.0.1:2375 -H unix:///var/run/docker.sock -s devicemapper"' | sudo tee /etc/default/docker > /dev/null
+  - sudo service docker restart; sleep 5
+  - sudo docker run --privileged -it -v /sys/fs/cgroup:/sys/fs/cgroup -d --name=centos7 -e TZ=America/New_York -e PATH=$PATH --restart always --entrypoint /sbin/init centos:7
+  
+script:
+  - sudo docker exec -it centos7 bash -c "yum install -q -yy @base; yum update -q -yy; yum install -q -yy curl git net-tools"
+  - sudo docker exec -it centos7 bash -c "$(curl -LSs https://github.com/casjay/ubuntu/raw/master/install.sh)"
 
 notifications:
   email:
     on_failure: never
     on_success: never
-
-install:
-  - sudo bash -c "$(curl -LSs https://github.com/casjay-dotfiles/scripts/raw/master/install.sh)"
-  - sudo GH=casjay bash -c "$(curl -LsS https://github.com/casjay-base/ubuntu/raw/master/install.sh)"
