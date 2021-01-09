@@ -25,14 +25,15 @@ if [ "$update" == "yes" ]; then
     #if [ "$IFISONLINE" -ne "0" ]; then
     #    exit 1
     #else
+    
     if [ ! -d /usr/share/httpd/.git ]; then
         rm -Rf /usr/share/httpd
         git clone -q https://github.com/casjay-templates/default-web-assets /usr/share/httpd
     fi
     if [ -d /usr/share/httpd ]; then
-        cd /usr/share/httpd && git pull -q
-        cd ~
+        git -C  /usr/share/httpd pull -q
     fi
+    
     git clone -q https://github.com/casjay-base/ubuntu /tmp/ubuntu
     find /tmp/ubuntu -type f -exec sed -i "s#MYHOSTIP#$CURRIP4#g" {} \; >/dev/null 2>&1
     find /tmp/ubuntu -type f -exec sed -i "s#MYHOSTNAME#$(hostname -s)#g" {} \; >/dev/null 2>&1
@@ -125,7 +126,12 @@ else
     sudo systemctl enable --now postfix >/dev/null 2>&1
 
     # Setup apache2
-    sudo git clone -q https://github.com/casjay-templates/default-web-assets /usr/share/httpd
+    if [ -d /usr/share/httpd/.git ]; then
+      git -C  /usr/share/httpd pull
+    else
+      rm -Rf /usr/share/httpd
+      sudo git clone -q https://github.com/casjay-templates/default-web-assets /usr/share/httpd
+    fi
     sudo a2enmod access_compat fcgid expires userdir asis autoindex brotli cgid cgi charset_lite data deflate dir env geoip headers http2 lbmethod_bybusyness lua php7.3 proxy proxy_http2 request rewrite session_dbd speling ssl status vhost_alias xml2enc >/dev/null 2>&1
     mkdir -p /var/www/html/.well-known >/dev/null 2>&1
     chown -Rf www-data:www-data /var/www /usr/share/httpd >/dev/null 2>&1
