@@ -154,7 +154,6 @@ else
     fi
 
     #Make motd
-    sudo cp -Rf /etc/casjaysdev/messages/legal.txt /etc/issue
     if [ -f /usr/games/fortune ] && [ -f /usr/games/cowsay ]; then
         sudo sh -c "/usr/games/fortune | /usr/games/cowsay > /etc/motd" >/dev/null 2>&1
         sudo echo -e "\n\n" >>/etc/motd >/dev/null 2>&1
