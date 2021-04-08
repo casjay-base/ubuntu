@@ -25,7 +25,7 @@ if [ "$update" == "yes" ]; then
     #if [ "$IFISONLINE" -ne "0" ]; then
     #    exit 1
     #else
-    
+
     if [ ! -d /usr/share/httpd/.git ]; then
         rm -Rf /usr/share/httpd
         git clone -q https://github.com/casjay-templates/default-web-assets /usr/share/httpd
@@ -33,7 +33,7 @@ if [ "$update" == "yes" ]; then
     if [ -d /usr/share/httpd ]; then
         git -C  /usr/share/httpd pull -q
     fi
-    
+
     git clone -q https://github.com/casjay-base/ubuntu /tmp/ubuntu
     find /tmp/ubuntu -type f -exec sed -i "s#MYHOSTIP#$CURRIP4#g" {} \; >/dev/null 2>&1
     find /tmp/ubuntu -type f -exec sed -i "s#MYHOSTNAME#$(hostname -s)#g" {} \; >/dev/null 2>&1
