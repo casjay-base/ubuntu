@@ -151,7 +151,7 @@ else
 
     #Add your public key to ssh
     #set GH to your github username
-    #use  sudo GH=username bash -c "$(wget -qO - https://github.com/casjay-base/ubuntu/raw/master/install.sh)"
+    #use  sudo GH=username bash -c "$(wget -qO - https://github.com/casjay-base/ubuntu/raw/main/install.sh)"
     if [ ! -z $GH ]; then
         printf "${GREEN}\n  *** ${RED}•${PURPLE} Installing $GH.keys into $HOME/.ssh/authorized_keys  ${RED}•${GREEN} ***${NC}\n\n\n"
         mkdir -p ~/.ssh >/dev/null 2>&1
@@ -166,7 +166,7 @@ else
     fi
 
     # Print installed version
-    NEWVERSION="$(echo $(curl -Lsq https://github.com/casjay-base/ubuntu/raw/master/version.txt | grep -v "#" | tail -n 1))"
+    NEWVERSION="$(echo $(curl -Lsq https://github.com/casjay-base/ubuntu/raw/main/version.txt | grep -v "#" | tail -n 1))"
     RESULT=$?
     #if [ $RESULT -eq 0 ]; then
     printf "${GREEN}      *** 😃 installation of ubuntu complete 😃 *** ${NC}\n"

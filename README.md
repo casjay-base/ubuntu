@@ -2,11 +2,11 @@
 
 ### Automated Install
 ```bash
-sudo GH=casjay bash -c "$(curl -LsS https://github.com/casjay/ubuntu/raw/master/install.sh)"
+sudo GH=casjay bash -c "$(curl -LsS https://github.com/casjay/ubuntu/raw/main/install.sh)"
 ```
 ### Automated update
 ```bash
-sudo update=yes bash -c "$(curl -LsS https://github.com/casjay/ubuntu/raw/master/install.sh)"
+sudo update=yes bash -c "$(curl -LsS https://github.com/casjay/ubuntu/raw/main/install.sh)"
 ```
 
 [![Patreon](https://img.shields.io/badge/patreon-donate-orange.svg)](https://www.patreon.com/casjay) 

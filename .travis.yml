@@ -13,8 +13,8 @@ jobs:
   
 script:
   - sudo bash -c "sudo apt update -q; sudo apt upgrade -yy -qq"
-  - sudo bash -c "$(curl -LSs https://github.com/systemmgr/installer/raw/master/install.sh)" && systemmgr install installer
-  - sudo bash -c "$(curl -LSs https://github.com/casjay/ubuntu/raw/master/install.sh)"
+  - sudo bash -c "$(curl -LSs https://github.com/systemmgr/installer/raw/main/install.sh)" && systemmgr install installer
+  - sudo bash -c "$(curl -LSs https://github.com/casjay/ubuntu/raw/main/install.sh)"
 
 notifications:
   email:

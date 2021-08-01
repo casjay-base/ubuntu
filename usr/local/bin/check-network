@@ -17,7 +17,7 @@ fi
 if [ "$IFISONLINE" -ne "0" ]; then
 	exit 1
 else
-#curl -LSs https://github.com/casjay-base/ubuntu/raw/master/etc/issue > /etc/issue
+#curl -LSs https://github.com/casjay-base/ubuntu/raw/main/etc/issue > /etc/issue
 echo "" >> /etc/issue
 echo "" > /etc/motd
 /usr/games/fortune | /usr/games/cowsay >> /etc/motd
