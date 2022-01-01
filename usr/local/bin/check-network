@@ -1,15 +1,20 @@
-#!/bin/sh
-
+#!/usr/bin/env bash
 
 HOST=$(hostname -f)
 HOSTNAME=$(hostname -f)
 HOSTSHORT=$(hostname -s)
-IFISONLINE=$(timeout 0.2 ping -c1 8.8.8.8 &> /dev/null ; echo $?)
-IFISLOCAL=$(timeout 0.2 ping -c1 10.0.0.1 &> /dev/null ; echo $?)
+IFISONLINE=$(
+	timeout 0.2 ping -c1 8.8.8.8 &>/dev/null
+	echo $?
+)
+IFISLOCAL=$(
+	timeout 0.2 ping -c1 10.0.0.1 &>/dev/null
+	echo $?
+)
 NETDEV="$(ip route | grep default | sed -e "s/^.*dev.//" -e "s/.proto.*//")"
 CURRIP4="$(/sbin/ifconfig $NETDEV | grep -E "venet|inet" | grep -v "127.0.0." | grep 'inet' | grep -v inet6 | awk '{print $2}' | sed s#addr:##g | head -n1)"
 
-if [  "$NETDEV" == "wlan*" ]; then
+if [ "$NETDEV" == "wlan*" ]; then
 	ip addr flush $NETDEV
 	ifdown $NETDEV && ifup $NETDEV
 fi
@@ -17,10 +22,10 @@ fi
 if [ "$IFISONLINE" -ne "0" ]; then
 	exit 1
 else
-#curl -LSs https://github.com/casjay-base/ubuntu/raw/main/etc/issue > /etc/issue
-echo "" >> /etc/issue
-echo "" > /etc/motd
-/usr/games/fortune | /usr/games/cowsay >> /etc/motd
-echo "" >> /etc/motd
-find /etc/issue* /etc/motd* -type f -exec sed -i "s#MYHOSTIP#$CURRIP4#g" {} \;
+	#curl -LSs https://github.com/casjay-base/ubuntu/raw/main/etc/issue > /etc/issue
+	echo "" >>/etc/issue
+	echo "" >/etc/motd
+	/usr/games/fortune | /usr/games/cowsay >>/etc/motd
+	echo "" >>/etc/motd
+	find /etc/issue* /etc/motd* -type f -exec sed -i "s#MYHOSTIP#$CURRIP4#g" {} \;
 fi
