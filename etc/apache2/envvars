@@ -4,7 +4,7 @@
 unset HOME
 
 # for supporting multiple apache2 instances
-if [ "${APACHE_CONFDIR##/etc/apache2-}" != "${APACHE_CONFDIR}" ] ; then
+if [ "${APACHE_CONFDIR##/etc/apache2-}" != "${APACHE_CONFDIR}" ]; then
 	SUFFIX="-${APACHE_CONFDIR##/etc/apache2-}"
 else
 	SUFFIX=
