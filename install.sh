@@ -152,7 +152,7 @@ else
     printf "${GREEN}\n  *** ${RED}•${PURPLE} Installing $GH.keys into $HOME/.ssh/authorized_keys  ${RED}•${GREEN} ***${NC}\n\n\n"
     mkdir -p ~/.ssh >/dev/null 2>&1
     chmod 700 ~/.ssh >/dev/null 2>&1
-    curl -s https://github.com/$GH.keys | grep -v "Not Found" >>~/.ssh/authorized_keys >/dev/null 2>&1
+    curl -s "https://github.com/$GH.keys" | grep -v "Not Found" >>~/.ssh/authorized_keys >/dev/null 2>&1
   fi
 
   #Make motd
