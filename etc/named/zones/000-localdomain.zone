@@ -1,0 +1,6 @@
+zone "myserverdomainname" {
+    type master;
+    file "master/localdomain.conf";
+    allow-update { trusted; };
+    allow-transfer { trusted; };
+};
