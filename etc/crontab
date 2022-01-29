@@ -2,7 +2,7 @@
 SHELL=SHELL=/bin/bash
 BASH_ENV="/root/.bashrc"
 PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin
-MAILTO=no-reply@MYHOSTNAME.casjay.in
+MAILTO=no-reply@myserverdomainname
 HOME=/
 
 # run-parts
