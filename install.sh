@@ -47,7 +47,7 @@ if [ "$update" == "yes" ]; then
 
   git clone -q https://github.com/casjay-base/ubuntu /tmp/ubuntu
   find /tmp/ubuntu -type f -exec sed -i "s#MYHOSTIP#$CURRIP4#g" {} \; >/dev/null 2>&1
-  find /tmp/ubuntu -type f -exec sed -i "s#MYHOSTNAME#$(hostname -s)#g" {} \; >/dev/null 2>&1
+  find /tmp/ubuntu -type f -exec sed -i "s#myserverdomainname#$(hostname -f 2>/dev/null)#g" {} \; >/dev/null 2>&1
   sudo rm -Rf /tmp/ubuntu/etc/{apache2,nginx,postfix,samba} >/dev/null 2>&1
   sudo cp -Rf /tmp/ubuntu/{usr,etc,var}* / >/dev/null 2>&1
   sudo rm -Rf /etc/cron.*/0* >/dev/null 2>&1
