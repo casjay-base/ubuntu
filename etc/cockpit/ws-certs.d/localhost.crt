@@ -1,0 +1,144 @@
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number: 0 (0x0)
+        Signature Algorithm: sha256WithRSAEncryption
+        Issuer: C=US, ST=Georgia, L=Savannah, O=Casjays Developments, OU=Casjays Developments, CN=casjaysdev.com/emailAddress=ssl-admin@casjaysdev.com
+        Validity
+            Not Before: Nov 20 15:01:37 2021 GMT
+            Not After : Nov 18 15:01:37 2031 GMT
+        Subject: C=US, ST=Georgia, L=Savannah, O=Casjays Developments, OU=Casjays Developments, CN=casjay.net/emailAddress=ssl-admin@casjay.net
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+                RSA Public-Key: (2048 bit)
+                Modulus:
+                    00:c1:70:2d:1d:3a:b0:ca:d3:a8:9f:9f:9d:6b:2c:
+                    76:47:32:b9:d5:cc:d0:1f:5c:e4:f8:9f:ca:44:f9:
+                    1d:ca:91:2f:be:00:97:c5:42:f8:e4:9e:61:8c:5a:
+                    c1:8f:96:8c:7a:45:0e:ea:9a:17:ab:9e:19:bd:59:
+                    b7:28:44:f7:68:0a:f7:fc:5d:53:b2:fa:fe:eb:10:
+                    e1:a7:ac:58:9e:00:05:e0:dd:d3:5f:d3:96:5b:da:
+                    37:10:56:0c:e9:94:f3:07:4e:ea:eb:69:9a:83:5e:
+                    3e:31:98:47:a7:6e:73:17:2a:58:60:f7:4d:a9:ae:
+                    32:48:fd:b8:94:07:ac:26:40:e5:30:ff:62:a5:34:
+                    aa:83:fc:38:69:e6:c9:3d:f0:77:e3:97:d8:03:cc:
+                    99:95:c8:a6:19:ef:08:8e:84:19:b2:9e:8d:f7:d3:
+                    9b:c4:86:1d:e1:56:20:3e:de:16:3f:39:d6:44:86:
+                    1c:6b:16:62:a0:db:31:68:0a:50:05:70:b7:74:e3:
+                    1c:82:27:19:6b:5a:1a:88:3d:8c:cb:bc:c3:5e:5e:
+                    74:5e:f9:a4:33:e6:b2:57:d6:d4:b5:60:0c:e6:9c:
+                    5f:39:ef:00:75:34:53:f9:83:28:52:f2:b9:df:01:
+                    64:18:d3:ab:c7:29:1a:38:21:13:e6:e2:a5:7e:a5:
+                    2b:9f
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Subject Alternative Name: 
+                DNS:apmpproject.org, DNS:casjay.cc, DNS:casjay.coffee, DNS:casjay.email, DNS:casjay.info, DNS:casjay.link, DNS:casjay.in, DNS:casjay.org, DNS:casjay.tel, DNS:casjay.us, DNS:casjay.xyz, DNS:casjaydns.com, DNS:casjaygames.com, DNS:casjaysdev.com, DNS:malaks.us, DNS:mpmalak.com, DNS:sqldb.us, DNS:*.apmpproject.org, DNS:*.casjay.cc, DNS:*.casjay.coffee, DNS:*.casjay.email, DNS:*.casjay.in, DNS:*.casjay.info, DNS:*.casjay.link, DNS:*.casjay.net, DNS:*.casjay.org, DNS:*.casjay.tel, DNS:*.casjay.us, DNS:*.casjay.xyz, DNS:*.casjaydns.com, DNS:*.casjaygames.com, DNS:*.casjaysdev.com, DNS:*.malaks.us, DNS:*.mpmalak.com, DNS:*.sqldb.us, DNS:*.local, DNS:localhost, DNS:*.localhost, DNS:*.onion, IP Address:127.0.0.0, IP Address:10.0.0.0, IP Address:172.16.0.0, IP Address:192.168.0.0, IP Address:0:0:0:0:0:0:0:1
+            X509v3 Basic Constraints: 
+                CA:FALSE
+            Netscape Cert Type: 
+                SSL Client, SSL Server, S/MIME, Object Signing
+            Netscape Comment: 
+                Casjays Developments CA
+            X509v3 Subject Key Identifier: 
+                B3:FD:83:A7:8E:96:01:E2:82:FF:42:B5:6F:33:D5:E2:98:87:E5:3B
+            X509v3 Authority Key Identifier: 
+                keyid:BD:B2:13:BC:F7:50:98:B3:7B:5E:9D:80:27:F7:33:B6:4C:90:A1:61
+                DirName:/C=US/ST=Georgia/L=Savannah/O=Casjays Developments/OU=Casjays Developments/CN=casjaysdev.com/emailAddress=ssl-admin@casjaysdev.com
+                serial:77:75:85:11:27:60:FA:07:27:E3:D0:7F:8F:9C:E0:B8:C9:1B:86:74
+
+            Netscape Base Url: 
+                http://ca.casjay.net/
+            Netscape Revocation Url: 
+                http://ca.casjay.net/revoke.crl
+            Netscape Renewal Url: 
+                http://ca.casjay.net/renewel.php
+            Netscape CA Revocation Url: 
+                http://ca.casjay.net/ca-revoke.crl
+            Netscape CA Policy Url: 
+                http://ca.casjay.net/ca-renewel.php
+            X509v3 Key Usage: 
+                Digital Signature, Non Repudiation, Key Encipherment
+    Signature Algorithm: sha256WithRSAEncryption
+         07:8f:2c:97:74:8e:b3:71:bc:34:4e:71:df:bc:bd:1b:07:84:
+         bd:6f:bd:3d:cc:73:40:97:f3:7f:4c:ee:da:0d:af:ac:6d:8e:
+         7e:54:28:8c:9f:aa:6b:cb:0b:c0:72:62:78:0d:5e:27:fe:d2:
+         b2:72:03:29:fd:b8:8d:63:ec:bb:67:27:a6:77:aa:97:8a:15:
+         d0:b1:7f:aa:65:e1:87:d5:b3:9d:1b:c5:4f:ac:86:30:31:0d:
+         2e:43:c1:37:f0:33:72:a3:5c:0f:fb:d5:45:70:bb:f0:43:1a:
+         0b:ec:a0:31:80:a9:7c:d9:05:b3:9b:cd:0d:2c:af:73:5f:58:
+         0b:e3:b8:80:e9:5a:7f:c6:8c:20:e6:97:cf:93:62:6a:75:c0:
+         3d:0f:2e:db:8d:5b:d7:47:b6:ef:54:b5:6e:0d:cb:08:32:ec:
+         32:aa:70:a4:31:e1:3a:af:f9:ff:f6:e2:71:ce:b9:bf:0d:17:
+         ab:78:a5:f2:78:61:ed:00:a3:52:c0:df:b4:8e:56:f7:fd:56:
+         4b:03:c2:59:70:18:ae:0d:d3:3f:5c:46:66:65:8e:b2:60:b9:
+         a5:ba:52:5f:dd:24:67:d0:7b:4f:1e:ff:dd:d9:dc:03:53:49:
+         c8:c2:c2:00:70:16:5b:b1:03:33:2e:84:e1:33:4d:10:56:39:
+         c2:a2:18:18:c9:0c:fe:6d:49:d0:03:2d:7b:8d:3e:8c:7a:1d:
+         a8:7f:fe:d1:80:6a:03:99:b9:18:26:ed:6c:0c:4a:6c:ad:05:
+         f8:00:dd:ee:4e:a2:79:9a:7b:cf:a4:8a:20:15:95:d9:9d:34:
+         6f:c9:39:1a:4e:bb:1c:27:00:20:48:5e:1d:4a:5b:3f:0d:27:
+         5d:ae:ba:93:11:6d:05:0c:65:60:3c:ad:d7:a1:3f:f5:3f:84:
+         4c:45:cf:ee:be:81:da:83:21:48:96:ff:a0:bc:82:a1:c2:17:
+         9c:68:70:29:7e:9a:33:b7:32:f1:ce:79:14:6f:42:7c:0f:c4:
+         96:b6:0c:a3:48:30:42:15:eb:f0:15:24:da:71:62:0d:d9:5b:
+         83:84:2f:9c:0c:c9:0f:7f:c4:62:48:6f:39:f5:f5:97:69:e2:
+         5f:0e:7f:10:cc:de:a9:16:35:1f:b8:97:ad:31:d4:c0:85:d9:
+         6b:90:7c:7a:86:77:2d:66:44:27:15:4f:fe:ac:a2:0f:09:78:
+         86:96:0d:1f:3d:c0:eb:4e:9d:de:26:fc:e4:07:37:5d:af:66:
+         68:69:2a:0f:b7:7d:f8:55:c6:d8:44:45:e0:f3:00:0c:3c:3b:
+         bb:37:3f:b4:b1:ae:3d:26:0a:1c:03:21:09:ca:01:6d:ee:5b:
+         67:9e:c0:8d:e7:19:a9:2e
+-----BEGIN CERTIFICATE-----
+MIIJhzCCB2+gAwIBAgIBADANBgkqhkiG9w0BAQsFADCBsjELMAkGA1UEBhMCVVMx
+EDAOBgNVBAgTB0dlb3JnaWExETAPBgNVBAcTCFNhdmFubmFoMR0wGwYDVQQKExRD
+YXNqYXlzIERldmVsb3BtZW50czEdMBsGA1UECxMUQ2FzamF5cyBEZXZlbG9wbWVu
+dHMxFzAVBgNVBAMTDmNhc2pheXNkZXYuY29tMScwJQYJKoZIhvcNAQkBFhhzc2wt
+YWRtaW5AY2FzamF5c2Rldi5jb20wHhcNMjExMTIwMTUwMTM3WhcNMzExMTE4MTUw
+MTM3WjCBqjELMAkGA1UEBhMCVVMxEDAOBgNVBAgTB0dlb3JnaWExETAPBgNVBAcT
+CFNhdmFubmFoMR0wGwYDVQQKExRDYXNqYXlzIERldmVsb3BtZW50czEdMBsGA1UE
+CxMUQ2FzamF5cyBEZXZlbG9wbWVudHMxEzARBgNVBAMTCmNhc2pheS5uZXQxIzAh
+BgkqhkiG9w0BCQEWFHNzbC1hZG1pbkBjYXNqYXkubmV0MIIBIjANBgkqhkiG9w0B
+AQEFAAOCAQ8AMIIBCgKCAQEAwXAtHTqwytOon5+dayx2RzK51czQH1zk+J/KRPkd
+ypEvvgCXxUL45J5hjFrBj5aMekUO6poXq54ZvVm3KET3aAr3/F1Tsvr+6xDhp6xY
+ngAF4N3TX9OWW9o3EFYM6ZTzB07q62mag14+MZhHp25zFypYYPdNqa4ySP24lAes
+JkDlMP9ipTSqg/w4aebJPfB345fYA8yZlcimGe8IjoQZsp6N99ObxIYd4VYgPt4W
+PznWRIYcaxZioNsxaApQBXC3dOMcgicZa1oaiD2My7zDXl50XvmkM+ayV9bUtWAM
+5pxfOe8AdTRT+YMoUvK53wFkGNOrxykaOCET5uKlfqUrnwIDAQABo4IErDCCBKgw
+ggJPBgNVHREEggJGMIICQoIPYXBtcHByb2plY3Qub3JnggljYXNqYXkuY2OCDWNh
+c2pheS5jb2ZmZWWCDGNhc2pheS5lbWFpbIILY2FzamF5LmluZm+CC2Nhc2pheS5s
+aW5rggljYXNqYXkuaW6CCmNhc2pheS5vcmeCCmNhc2pheS50ZWyCCWNhc2pheS51
+c4IKY2FzamF5Lnh5eoINY2FzamF5ZG5zLmNvbYIPY2FzamF5Z2FtZXMuY29tgg5j
+YXNqYXlzZGV2LmNvbYIJbWFsYWtzLnVzggttcG1hbGFrLmNvbYIIc3FsZGIudXOC
+ESouYXBtcHByb2plY3Qub3JnggsqLmNhc2pheS5jY4IPKi5jYXNqYXkuY29mZmVl
+gg4qLmNhc2pheS5lbWFpbIILKi5jYXNqYXkuaW6CDSouY2FzamF5LmluZm+CDSou
+Y2FzamF5LmxpbmuCDCouY2FzamF5Lm5ldIIMKi5jYXNqYXkub3JnggwqLmNhc2ph
+eS50ZWyCCyouY2FzamF5LnVzggwqLmNhc2pheS54eXqCDyouY2FzamF5ZG5zLmNv
+bYIRKi5jYXNqYXlnYW1lcy5jb22CECouY2FzamF5c2Rldi5jb22CCyoubWFsYWtz
+LnVzgg0qLm1wbWFsYWsuY29tggoqLnNxbGRiLnVzggcqLmxvY2Fsgglsb2NhbGhv
+c3SCCyoubG9jYWxob3N0ggcqLm9uaW9uhwR/AAAAhwQKAAAAhwSsEAAAhwTAqAAA
+hxAAAAAAAAAAAAAAAAAAAAABMAkGA1UdEwQCMAAwEQYJYIZIAYb4QgEBBAQDAgTw
+MCYGCWCGSAGG+EIBDQQZFhdDYXNqYXlzIERldmVsb3BtZW50cyBDQTAdBgNVHQ4E
+FgQUs/2Dp46WAeKC/0K1bzPV4piH5TswgfIGA1UdIwSB6jCB54AUvbITvPdQmLN7
+Xp2AJ/cztkyQoWGhgbikgbUwgbIxCzAJBgNVBAYTAlVTMRAwDgYDVQQIEwdHZW9y
+Z2lhMREwDwYDVQQHEwhTYXZhbm5haDEdMBsGA1UEChMUQ2FzamF5cyBEZXZlbG9w
+bWVudHMxHTAbBgNVBAsTFENhc2pheXMgRGV2ZWxvcG1lbnRzMRcwFQYDVQQDEw5j
+YXNqYXlzZGV2LmNvbTEnMCUGCSqGSIb3DQEJARYYc3NsLWFkbWluQGNhc2pheXNk
+ZXYuY29tghR3dYURJ2D6Byfj0H+PnOC4yRuGdDAkBglghkgBhvhCAQIEFxYVaHR0
+cDovL2NhLmNhc2pheS5uZXQvMC4GCWCGSAGG+EIBAwQhFh9odHRwOi8vY2EuY2Fz
+amF5Lm5ldC9yZXZva2UuY3JsMC8GCWCGSAGG+EIBBwQiFiBodHRwOi8vY2EuY2Fz
+amF5Lm5ldC9yZW5ld2VsLnBocDAxBglghkgBhvhCAQQEJBYiaHR0cDovL2NhLmNh
+c2pheS5uZXQvY2EtcmV2b2tlLmNybDAyBglghkgBhvhCAQgEJRYjaHR0cDovL2Nh
+LmNhc2pheS5uZXQvY2EtcmVuZXdlbC5waHAwCwYDVR0PBAQDAgXgMA0GCSqGSIb3
+DQEBCwUAA4ICAQAHjyyXdI6zcbw0TnHfvL0bB4S9b709zHNAl/N/TO7aDa+sbY5+
+VCiMn6prywvAcmJ4DV4n/tKycgMp/biNY+y7Zyemd6qXihXQsX+qZeGH1bOdG8VP
+rIYwMQ0uQ8E38DNyo1wP+9VFcLvwQxoL7KAxgKl82QWzm80NLK9zX1gL47iA6Vp/
+xowg5pfPk2JqdcA9Dy7bjVvXR7bvVLVuDcsIMuwyqnCkMeE6r/n/9uJxzrm/DRer
+eKXyeGHtAKNSwN+0jlb3/VZLA8JZcBiuDdM/XEZmZY6yYLmlulJf3SRn0HtPHv/d
+2dwDU0nIwsIAcBZbsQMzLoThM00QVjnCohgYyQz+bUnQAy17jT6Meh2of/7RgGoD
+mbkYJu1sDEpsrQX4AN3uTqJ5mnvPpIogFZXZnTRvyTkaTrscJwAgSF4dSls/DSdd
+rrqTEW0FDGVgPK3XoT/1P4RMRc/uvoHagyFIlv+gvIKhwhecaHApfpoztzLxznkU
+b0J8D8SWtgyjSDBCFevwFSTacWIN2VuDhC+cDMkPf8RiSG859fWXaeJfDn8QzN6p
+FjUfuJetMdTAhdlrkHx6hnctZkQnFU/+rKIPCXiGlg0fPcDrTp3eJvzkBzddr2Zo
+aSoPt334VcbYREXg8wAMPDu7Nz+0sa49JgocAyEJygFt7ltnnsCN5xmpLg==
+-----END CERTIFICATE-----
