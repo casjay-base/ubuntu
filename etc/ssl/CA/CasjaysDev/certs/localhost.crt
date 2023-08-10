@@ -3,11 +3,11 @@ Certificate:
         Version: 3 (0x2)
         Serial Number: 0 (0x0)
         Signature Algorithm: sha256WithRSAEncryption
-        Issuer: C=US, ST=Georgia, L=Savannah, O=Casjays Developments, OU=Casjays Developments, CN=casjaysdev.com/emailAddress=ssl-admin@casjaysdev.com
+        Issuer: C=US, ST=Georgia, L=Savannah, O=Casjays Developments, OU=Casjays Developments, CN=casjaysdev.pro/emailAddress=ssl-admin@casjaysdev.pro
         Validity
             Not Before: Nov 20 15:01:37 2021 GMT
             Not After : Nov 18 15:01:37 2031 GMT
-        Subject: C=US, ST=Georgia, L=Savannah, O=Casjays Developments, OU=Casjays Developments, CN=casjay.net/emailAddress=ssl-admin@casjay.net
+        Subject: C=US, ST=Georgia, L=Savannah, O=Casjays Developments, OU=Casjays Developments, CN=casjay.pro/emailAddress=ssl-admin@casjay.pro
         Subject Public Key Info:
             Public Key Algorithm: rsaEncryption
                 RSA Public-Key: (2048 bit)
@@ -33,7 +33,7 @@ Certificate:
                 Exponent: 65537 (0x10001)
         X509v3 extensions:
             X509v3 Subject Alternative Name: 
-                DNS:apmpproject.org, DNS:casjay.cc, DNS:casjay.coffee, DNS:casjay.email, DNS:casjay.info, DNS:casjay.link, DNS:casjay.in, DNS:casjay.org, DNS:casjay.tel, DNS:casjay.us, DNS:casjay.xyz, DNS:casjaydns.com, DNS:casjaygames.com, DNS:casjaysdev.com, DNS:malaks.us, DNS:mpmalak.com, DNS:sqldb.us, DNS:*.apmpproject.org, DNS:*.casjay.cc, DNS:*.casjay.coffee, DNS:*.casjay.email, DNS:*.casjay.in, DNS:*.casjay.info, DNS:*.casjay.link, DNS:*.casjay.net, DNS:*.casjay.org, DNS:*.casjay.tel, DNS:*.casjay.us, DNS:*.casjay.xyz, DNS:*.casjaydns.com, DNS:*.casjaygames.com, DNS:*.casjaysdev.com, DNS:*.malaks.us, DNS:*.mpmalak.com, DNS:*.sqldb.us, DNS:*.local, DNS:localhost, DNS:*.localhost, DNS:*.onion, IP Address:127.0.0.0, IP Address:10.0.0.0, IP Address:172.16.0.0, IP Address:192.168.0.0, IP Address:0:0:0:0:0:0:0:1
+                DNS:apmpproject.org, DNS:casjay.cc, DNS:casjay.coffee, DNS:casjay.email, DNS:casjay.info, DNS:casjay.link, DNS:casjay.in, DNS:casjay.org, DNS:casjay.tel, DNS:casjay.us, DNS:casjay.xyz, DNS:casjaydns.com, DNS:casjaygames.com, DNS:casjaysdev.pro, DNS:malaks.us, DNS:mpmalak.com, DNS:sqldb.us, DNS:*.apmpproject.org, DNS:*.casjay.cc, DNS:*.casjay.coffee, DNS:*.casjay.email, DNS:*.casjay.in, DNS:*.casjay.info, DNS:*.casjay.link, DNS:*.casjay.pro, DNS:*.casjay.org, DNS:*.casjay.tel, DNS:*.casjay.us, DNS:*.casjay.xyz, DNS:*.casjaydns.com, DNS:*.casjaygames.com, DNS:*.casjaysdev.pro, DNS:*.malaks.us, DNS:*.mpmalak.com, DNS:*.sqldb.us, DNS:*.local, DNS:localhost, DNS:*.localhost, DNS:*.onion, IP Address:127.0.0.0, IP Address:10.0.0.0, IP Address:172.16.0.0, IP Address:192.168.0.0, IP Address:0:0:0:0:0:0:0:1
             X509v3 Basic Constraints: 
                 CA:FALSE
             Netscape Cert Type: 
@@ -44,19 +44,19 @@ Certificate:
                 B3:FD:83:A7:8E:96:01:E2:82:FF:42:B5:6F:33:D5:E2:98:87:E5:3B
             X509v3 Authority Key Identifier: 
                 keyid:BD:B2:13:BC:F7:50:98:B3:7B:5E:9D:80:27:F7:33:B6:4C:90:A1:61
-                DirName:/C=US/ST=Georgia/L=Savannah/O=Casjays Developments/OU=Casjays Developments/CN=casjaysdev.com/emailAddress=ssl-admin@casjaysdev.com
+                DirName:/C=US/ST=Georgia/L=Savannah/O=Casjays Developments/OU=Casjays Developments/CN=casjaysdev.pro/emailAddress=ssl-admin@casjaysdev.pro
                 serial:77:75:85:11:27:60:FA:07:27:E3:D0:7F:8F:9C:E0:B8:C9:1B:86:74
 
             Netscape Base Url: 
-                http://ca.casjay.net/
+                http://ca.casjay.pro/
             Netscape Revocation Url: 
-                http://ca.casjay.net/revoke.crl
+                http://ca.casjay.pro/revoke.crl
             Netscape Renewal Url: 
-                http://ca.casjay.net/renewel.php
+                http://ca.casjay.pro/renewel.php
             Netscape CA Revocation Url: 
-                http://ca.casjay.net/ca-revoke.crl
+                http://ca.casjay.pro/ca-revoke.crl
             Netscape CA Policy Url: 
-                http://ca.casjay.net/ca-renewel.php
+                http://ca.casjay.pro/ca-renewel.php
             X509v3 Key Usage: 
                 Digital Signature, Non Repudiation, Key Encipherment
     Signature Algorithm: sha256WithRSAEncryption
