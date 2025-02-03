@@ -37,12 +37,12 @@ if [ "$update" == "yes" ]; then
   #if [ "$IFISONLINE" -ne "0" ]; then
   # exit 1
   #else
-  if [ ! -d /usr/share/httpd/.git ]; then
-    rm -Rf /usr/share/httpd
-    git clone -q https://github.com/casjay-templates/default-web-assets /usr/share/httpd
+  if [ ! -d /usr/local/share/httpd/.git ]; then
+    rm -Rf /usr/local/share/httpd
+    git clone -q https://github.com/casjay-templates/default-web-assets /usr/local/share/httpd
   fi
-  if [ -d /usr/share/httpd ]; then
-    git -C /usr/share/httpd pull -q
+  if [ -d /usr/local/share/httpd ]; then
+    git -C /usr/local/share/httpd pull -q
   fi
 
   git clone -q https://github.com/casjay-base/ubuntu /tmp/ubuntu
@@ -122,15 +122,15 @@ else
   sudo systemctl enable --now postfix >/dev/null 2>&1
 
   # Setup apache2
-  if [ -d /usr/share/httpd/.git ]; then
-    git -C /usr/share/httpd pull
+  if [ -d /usr/local/share/httpd/.git ]; then
+    git -C /usr/local/share/httpd pull
   else
-    rm -Rf /usr/share/httpd
-    sudo git clone -q https://github.com/casjay-templates/default-web-assets /usr/share/httpd
+    rm -Rf /usr/local/share/httpd
+    sudo git clone -q https://github.com/casjay-templates/default-web-assets /usr/local/share/httpd
   fi
   sudo a2enmod access_compat fcgid expires userdir asis autoindex brotli cgid cgi charset_lite data deflate dir env geoip headers http2 lbmethod_bybusyness lua php7.3 proxy proxy_http2 request rewrite session_dbd speling ssl status vhost_alias xml2enc >/dev/null 2>&1
   mkdir -p /var/www/html/.well-known >/dev/null 2>&1
-  chown -Rf www-data:www-data /var/www /usr/share/httpd >/dev/null 2>&1
+  chown -Rf www-data:www-data /var/www /usr/local/share/httpd >/dev/null 2>&1
 
   # Install My CA cert
   sudo cp -Rf /etc/ssl/CA/CasjaysDev/certs/ca.crt /usr/local/share/ca-certificates/CasjaysDev.crt >/dev/null 2>&1
