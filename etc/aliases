@@ -1,165 +1,417 @@
-# You should modify this to meet your enviroment
+# Mail Aliases Configuration
+# You should modify this to meet your environment
+# 
+# Format: alias_name: destination
+# Multiple destinations can be separated by commas
+# Lines starting with # are comments
 
-mailer-daemon:      postmaster
-postmaster:         postmaster
-bin:                admin
-daemon:             admin
-adm:                admin
-lp:                 admin
-sync:               admin
-shutdown:           alerts
-halt:               admin
-mail:               admin
-news:               admin
-uucp:               admin
-operator:           admin
-games:              admin
-gopher:             admin
-ftp:                admin
-contact:            admin
-radiusd:            admin
-nut:                admin
-dbus:               admin
-vcsa:               admin
-canna:              admin
-wnn:                admin
-rpm:                admin
-nscd:               admin
-pcap:               admin
-webalizer:          admin
-dovecot:            admin
-fax:                admin
-quagga:             admin
-radvd:              admin
-pvm:                admin
-amanda:             admin
-privoxy:            admin
-ident:              admin
-named:              admin
-xfs:                admin
-gdm:                admin
-mailnull:           admin
-postgres:           admin
-sshd:               admin
-smmsp:              admin
-postfix:            admin
-netdump:            admin
-ldap:               admin
-squid:              admin
-ntp:                admin
-mysql:              admin
-desktop:            admin
-rpcuser:            admin
-rpc:                admin
-snort:              admin
-nfsnobody:          admin
-ingres:             admin
-system:             admin
-toor:               admin
-manager:            admin
-dumper:             admin
-abuse:              admin
-newsadm:            news
-newsadmin:          news
-usenet:             news
-virusadmin:         virusalert
-apache:             webmaster
-www:                webmaster
-webmaster:          admin
-proxy-admin:        admin
-feedback:           admin
-noc:                admin
-security:           pager
-hostmaster:         admin
-info:               postmaster
-sales:              postmaster
-support:            postmaster
-monit:              monitoring
-monitoring:         pager
-alert:              pager
-alerts:             pager
-virusalert:         pager
-virus-tester:       admin
-backups:            admin
-update:             admin
-updates:            admin
-munin:              admin
-webmin:             admin
-usermin:            admin
-virtualmin:         admin
-icecast:            admin
-status:             admin
-nagios:             admin
-logwatch:           admin
-logcheck:           admin
-fail2ban:           pager
-aide:               admin
-dkim-milter:        admin
-decode:             admin
-asterisk:           admin
-pbx:                admin
-sms:                pager
-uptimed:            admin
-cron:               admin
-cron-daemon:        admin
-maintenance:        alerts
-smartmon:           alerts
-logs:               admin
-hosting:            admin
-request:            hosting
-hosting-request:    hosting
-push:               admin
-privacy:            admin
-policy:             admin
-nas-server:         admin
-build-system:       admin
-faxes:              faxmaster
-faxing:             faxmaster
-faxmaster:          admin
-reminders:          no-reply
-bugzilla-daemon:    no-reply
-vm:                 no-reply
-kaltura:            admin
-dnssec-tools:       admin
-system-scripts:     admin
-ca-request:         forwardto
-nas:                admin
-root:               admin
-pager:              admin
-nobody:             null
-accounting:         null
-noreply:            null
-no-reply:           null
-marketing:          null
-contactus:          null
-null:               /dev/null
-devices:            admin
-faxadmin:           admin
-feedadmin:          alert
-dnsadmin:           admin
-ftpadm:             ftp
-ftpadmin:           ftp
-ssladmin:           pager
-ssl-admin:          pager
-www-admin:          admin
-dns-admin:          admin
-ca-admin:           admin
-radio-admin:        admin
-ftp-adm:            ftp
-ftp-admin:          ftp
-docker-admin:       admin
-cvsadmin:           scm-admin
-git-admin:          scm-admin
-svn-admin:          scm-admin
-cvs-admin:          scm-admin
-bzr-admin:          scm-admin
-travis-ci:          ci-admin
-jenkins-ci:         ci-admin
-gitlab-ci:          ci-admin
-jenkins:            ci-admin
-ci-admin:           admin
-scm-admin:          admin
-admin:              forwardto
-forwardto:          administrator
+# =============================================================================
+# CORE SYSTEM ACCOUNTS
+# =============================================================================
 
-# vim:ts=4:sw=4
+# Essential mail handling
+mailer-daemon:                  postmaster
+postmaster:                     postmaster
+root:                           admin
+nobody:                         null
+
+# =============================================================================
+# SYSTEM SERVICE ACCOUNTS  
+# =============================================================================
+
+# Basic system services
+bin:                            admin
+daemon:                         admin
+adm:                            admin
+lp:                             admin
+sync:                           admin
+mail:                           admin
+operator:                       admin
+games:                          admin
+gopher:                         admin
+toor:                           admin
+system:                         admin
+
+# Shutdown and alerts
+shutdown:                       alerts
+halt:                           admin
+
+# =============================================================================
+# NETWORK AND COMMUNICATION SERVICES
+# =============================================================================
+
+# SSH and authentication
+sshd:                           admin
+ident:                          admin
+saslauth:                       admin
+
+# Mail services
+smmsp:                          admin
+postfix:                        admin
+mailnull:                       admin
+dovecot:                        admin
+dovenull:                       admin
+opendkim:                       admin
+opendmarc:                      admin
+postgrey:                       admin
+amavis:                         admin
+sa-milt:                        admin
+
+# DNS services
+named:                          admin
+dnsadmin:                       admin
+dns-admin:                      admin
+dnssec-tools:                   admin
+
+# Web services
+nginx:                          webmaster
+apache:                         webmaster
+www:                            webmaster
+www-admin:                      admin
+
+# Database services
+postgres:                       admin
+mysql:                          admin
+ldap:                           admin
+
+# Network services
+squid:                          admin
+proxy-admin:                    admin
+ntp:                            admin
+rpc:                            admin
+rpcuser:                        admin
+
+# =============================================================================
+# MONITORING AND MAINTENANCE
+# =============================================================================
+
+# System monitoring
+monit:                          monitoring
+nagios:                         admin
+munin:                          admin
+vnstat:                         admin
+uptimed:                        admin
+
+# Log management
+logwatch:                       admin
+logcheck:                       admin
+logs:                           admin
+
+# Security monitoring
+snort:                          admin
+fail2ban:                       pager
+aide:                           admin
+
+# Hardware monitoring
+smartmon:                       alerts
+
+# Antivirus
+clamupdate:                     admin
+clamscan:                       admin
+virus-tester:                   admin
+virusadmin:                     virusalert
+
+# =============================================================================
+# ADMINISTRATIVE SERVICES
+# =============================================================================
+
+# System administration
+webmin:                         admin
+usermin:                        admin
+virtualmin:                     admin
+cockpit-ws:                     admin
+cockpit-wsinstance:             admin
+
+# Backup and maintenance
+backups:                        admin
+maintenance:                    alerts
+cron:                           admin
+
+# Update services
+update:                         admin
+updates:                        admin
+
+# Certificate management
+ca-admin:                       admin
+ca-request:                     forwardto
+ssladmin:                       pager
+ssl-admin:                      pager
+
+# =============================================================================
+# DEVELOPMENT AND VERSION CONTROL
+# =============================================================================
+
+# Version control systems
+cvs:                            scm-admin
+git:                            scm-admin
+svn:                            scm-admin
+bzr:                            scm-admin
+
+# Version control administration
+git-admin:                      scm-admin
+svn-admin:                      scm-admin
+cvs-admin:                      scm-admin
+bzr-admin:                      scm-admin
+
+# Continuous integration
+travis-ci:                      ci-admin
+gitlab-ci:                      ci-admin
+jenkins-ci:                     ci-admin
+travis:                         ci-admin
+jenkins:                        ci-admin
+gitlab:                         ci-admin
+
+# Development
+dev:                            admin
+devel:                          admin
+build-system:                   admin
+
+# API and automation
+api:                            admin
+webhook:                        admin
+webhooks:                       admin
+automation:                     admin
+deploy:                         admin
+deployment:                     admin
+releases:                       admin
+staging:                        admin
+production:                     admin
+testing:                        admin
+
+# =============================================================================
+# MULTIMEDIA AND STREAMING
+# =============================================================================
+
+icecast:                        admin
+asterisk:                       admin
+pbx:                            admin
+kaltura:                        admin
+
+# =============================================================================
+# SPECIALIZED SERVICES
+# =============================================================================
+
+# News services
+news:                           admin
+newsadm:                        news
+newsadmin:                      news
+usenet:                         news
+
+# FTP services
+ftpadm:                         ftp
+ftpadmin:                       ftp
+ftp-adm:                        ftp
+ftp-admin:                      ftp
+
+# Fax services
+fax:                            admin
+faxes:                          faxmaster
+faxing:                         faxmaster
+faxmaster:                      admin
+faxadmin:                       admin
+
+# Container services
+docker:                         admin
+docker-admin:                   admin
+
+# Communication
+sms:                            pager
+
+# Various system services
+contact:                        admin
+radiusd:                        admin
+nut:                            admin
+dbus:                           admin
+vcsa:                           admin
+canna:                          admin
+wnn:                            admin
+rpm:                            admin
+nscd:                           admin
+pcap:                           admin
+webalizer:                      admin
+quagga:                         admin
+radvd:                          admin
+pvm:                            admin
+amanda:                         admin
+privoxy:                        admin
+xfs:                            admin
+gdm:                            admin
+netdump:                        admin
+nfsnobody:                      admin
+ingres:                         admin
+manager:                        admin
+dumper:                         admin
+desktop:                        admin
+systemd-coredump:               admin
+systemd-oom:                    admin
+polkitd:                        admin
+tss:                            admin
+sssd:                           admin
+chrony:                         admin
+rtkit:                          admin
+pipewire:                       admin
+geoclue:                        admin
+flatpak:                        admin
+dkim-milter:                    admin
+decode:                         admin
+push:                           admin
+nas-server:                     admin
+nas:                            admin
+system-scripts:                 admin
+devices:                        admin
+lightmeter:                     admin
+
+# =============================================================================
+# BUSINESS AND COMMUNICATION ALIASES
+# =============================================================================
+
+# General business
+abuse:                          admin
+noc:                            admin
+security:                       pager
+hostmaster:                     admin
+info:                           postmaster
+sales:                          postmaster
+support:                        postmaster
+feedback:                       admin
+webmaster:                      admin
+domain-admin:                   admin
+radio-admin:                    admin
+
+# Common business contacts
+billing:                        postmaster
+invoice:                        postmaster
+invoices:                       postmaster
+accounts:                       postmaster
+finance:                        postmaster
+legal:                          postmaster
+compliance:                     postmaster
+hr:                             postmaster
+jobs:                           postmaster
+careers:                        postmaster
+recruitment:                    postmaster
+
+# Technical support variations
+help:                           support
+helpdesk:                       support
+support-team:                   support
+technical:                      support
+tech:                           support
+
+# Security variations
+security-team:                  security
+incident:                       security
+incidents:                      security
+csirt:                          security
+cert:                           security
+vulnerability:                  security
+vulnerabilities:                security
+
+# Marketing and communications
+press:                          postmaster
+media:                          postmaster
+pr:                             postmaster
+newsletter:                     postmaster
+communications:                 postmaster
+
+# Partnership and business development
+partners:                       postmaster
+partnership:                    postmaster
+business:                       postmaster
+bd:                             postmaster
+
+# Data protection and privacy
+dpo:                            privacy
+gdpr:                           privacy
+data-protection:                privacy
+privacy-officer:                privacy
+
+# Status and alerts
+alert:                          pager
+alerts:                         pager
+status:                         admin
+
+# Hosting
+hosting:                        admin
+request:                        hosting
+hosting-request:                hosting
+
+# Privacy and policy
+privacy:                        admin
+policy:                         admin
+
+# Feed administration
+feedadmin:                      alert
+
+# =============================================================================
+# NULL/NO-REPLY ALIASES
+# =============================================================================
+
+# Automated systems that should not receive replies
+reminders:                      no-reply
+bugzilla-daemon:                no-reply
+vm:                             no-reply
+notifications:                  no-reply
+alerts-noreply:                 no-reply
+donotreply:                     no-reply
+automated:                      no-reply
+
+# Business nulls
+accounting:                     null
+noreply:                        null
+marketing:                      null
+contactus:                      null
+
+# =============================================================================
+# CLOUD AND INFRASTRUCTURE
+# =============================================================================
+
+# Cloud platforms
+aws:                            admin
+azure:                          admin
+gcp:                            admin
+cloud:                          admin
+cloudflare:                     admin
+
+# Infrastructure
+infrastructure:                 admin
+infra:                          admin
+devops:                         admin
+sre:                            admin
+platform:                       admin
+k8s:                            admin
+kubernetes:                     admin
+containers:                     admin
+
+# Load balancing and networking
+loadbalancer:                   admin
+lb:                             admin
+proxy:                          admin
+cdn:                            admin
+edge:                           admin
+
+# =============================================================================
+# ALIAS CHAIN DEFINITIONS
+# =============================================================================
+
+# Define the alias chain from specific to general
+ci-admin:                       admin
+scm-admin:                      admin
+monitoring:                     pager
+virusalert:                     pager
+pager:                          admin
+no-reply:                       null
+ftp:                            admin
+null:                           /dev/null
+
+# Final destination chain - all admin mail ultimately goes to administrator
+# This two-step chain allows easy redirection of all administrative mail
+# by only changing the 'forwardto' alias destination
+admin:                          forwardto
+forwardto:                      administrator
+
+# =============================================================================
+# CONFIGURATION
+# =============================================================================
+
+# vim:ts=2:sw=2:ft=text
