@@ -11,7 +11,7 @@
 
 # Essential mail handling
 mailer-daemon:                  postmaster
-postmaster:                     postmaster
+postmaster:                     admin
 root:                           admin
 nobody:                         null
 
@@ -133,7 +133,7 @@ updates:                        admin
 
 # Certificate management
 ca-admin:                       admin
-ca-request:                     forwardto
+ca-request:                     admin
 ssladmin:                       pager
 ssl-admin:                      pager
 
@@ -391,6 +391,19 @@ cdn:                            admin
 edge:                           admin
 
 # =============================================================================
+# Mailing list management
+# =============================================================================
+mailman:                        admin
+mailman-owner:                  admin
+list:                           admin
+lists:                          admin
+listmaster:                     admin
+listadmin:                      admin
+list-admin:                     admin
+majordomo:                      admin
+ezmlm:                          admin
+
+# =============================================================================
 # ALIAS CHAIN DEFINITIONS
 # =============================================================================
 
@@ -402,12 +415,12 @@ virusalert:                     pager
 pager:                          admin
 no-reply:                       null
 ftp:                            admin
+admin:                          forwardto
 null:                           /dev/null
 
 # Final destination chain - all admin mail ultimately goes to administrator
 # This two-step chain allows easy redirection of all administrative mail
 # by only changing the 'forwardto' alias destination
-admin:                          forwardto
 forwardto:                      administrator
 
 # =============================================================================
