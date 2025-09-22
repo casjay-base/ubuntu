@@ -1,7 +1,81 @@
-transport_maps = hash:/etc/postfix/transport
-canonical_maps = hash:/etc/postfix/canonical
-fax_destination_recipient_limit = 1
-relayhost = mail
-myserverdomainname = myserverdomainname
-myorigin = myserverdomainname
-mydestination =
+############################################################
+# 📄 Postfix main.cf — Satellite relay - Relays mail to a smarthost
+#   - Provides 25 (STARTTLS), 587 (mandatory STARTTLS), 465 (implicit TLS)
+############################################################
+
+########################
+# 🔖 Identity
+########################
+smtpd_banner                     = CasjaysDev Satellite Server
+mydomain                         = myserverdomainname
+myorigin                         = myserverdomainname
+myhostname                       = myserverhostname
+compatibility_level              = 2
+
+########################
+# 🧹 Misc/Defaults
+########################
+append_dot_mydomain              = no
+
+########################
+# 🌐 Network / Listener
+########################
+inet_interfaces                  = all
+inet_protocols                   = all
+mynetworks                       = /etc/postfix/mynetworks
+
+########################
+# 📮 Local delivery (disabled for satellite role)
+########################
+mydestination                    =
+local_transport                  = error: local delivery disabled
+maximal_queue_lifetime           = 30d
+
+########################
+# 🔐 Server-side TLS (for inbound 25/587/465)
+########################
+smtpd_use_tls                    = yes
+smtpd_tls_cert_file              = /etc/letsencrypt/live/domain/fullchain.pem
+smtpd_tls_key_file               = /etc/letsencrypt/live/domain/privkey.pem
+smtpd_tls_security_level         = may                # 25 will *offer* STARTTLS; 587/465 enforce via master.cf
+smtpd_tls_loglevel               = 1
+# Minimum protocol policy (safe defaults):
+smtpd_tls_protocols              = !SSLv2, !SSLv3
+smtpd_tls_mandatory_protocols    = TLSv1.2, TLSv1.3
+
+########################
+# 🧰 Inbound policy (no open relay)
+########################
+smtpd_relay_restrictions         = permit_mynetworks, permit_sasl_authenticated, reject_unauth_destination
+smtpd_recipient_restrictions     = permit_mynetworks, permit_sasl_authenticated, reject_unauth_destination
+
+########################
+# 🧪 (Optional) Milters
+########################
+#smtpd_milters                    =
+#non_smtpd_milters                = $smtpd_milters
+
+########################
+# 🧰 Outbound policy
+########################
+smtp_tls_security_level          = encrypt
+smtp_tls_loglevel                = 1
+smtp_tls_protocols               = !SSLv2, !SSLv3
+smtp_tls_mandatory_protocols     = TLSv1.2, TLSv1.3
+
+########################
+# SASL auth to the relay
+########################
+smtp_sasl_auth_enable            = no
+smtp_sasl_password_maps          = hash:/etc/postfix/sasl/passwd
+smtp_sasl_security_options       = noanonymous
+smtp_sasl_mechanism_filter       = plain, login
+
+########################
+# 🚀 Outbound relay (to smarthost)
+########################
+relayhost                        = [smtp.casjay.email]:465
+
+############################################################
+# ✅ End of main.cf
+############################################################
