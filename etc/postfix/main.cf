@@ -37,7 +37,8 @@ maximal_queue_lifetime           = 30d
 smtpd_use_tls                    = yes
 smtpd_tls_cert_file              = /etc/letsencrypt/live/domain/fullchain.pem
 smtpd_tls_key_file               = /etc/letsencrypt/live/domain/privkey.pem
-smtpd_tls_security_level         = may                # 25 will *offer* STARTTLS; 587/465 enforce via master.cf
+smtpd_tls_security_level         = may
+# 25 will *offer* STARTTLS; 587/465 enforce via master.cf
 smtpd_tls_loglevel               = 1
 # Minimum protocol policy (safe defaults):
 smtpd_tls_protocols              = !SSLv2, !SSLv3
