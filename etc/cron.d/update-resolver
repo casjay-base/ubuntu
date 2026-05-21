@@ -1,0 +1,2 @@
+# Update resolv.conf - runs every 12 hours
+30 */12 * * * root [ -x "/root/.local/bin/update-resolv.sh" ] && /root/.local/bin/update-resolv.sh >/dev/null 2>&1

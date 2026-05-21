@@ -1,0 +1,5 @@
+###############################################################################
+#ZONE       TYPE          OPTIONS    IN_OPTIONS    OUT_OPTIONS
+fw          firewall
+net         ipv4
+dock        ipv4

@@ -1,0 +1,117 @@
+[*]
+user root
+env.username root
+env.password mysecurepassword
+env.host myserverdomainname
+
+[amavis]
+group root
+env.MUNIN_MKTEMP /bin/mktemp -p /tmp/ $1
+env.amavislog /var/log/mail.log
+
+[mysql*]
+env.mysqluser root
+env.mysqlpassword mysecurepassword
+
+[disk*]
+user root
+
+[cps*]
+user root
+
+[postfix*]
+user root
+
+[hddtemp*]
+user root
+
+[postfix*]
+user root
+env.logfile maillog
+env.logdir /var/log
+
+[munin*]
+user munin
+
+[postgres*]
+user postgres
+env.PGUSER administrator
+env.PGPASS mysecurepassword
+env.PGPORT 5432
+
+[ip_*]
+user root
+
+[fail2ban]
+env.client /usr/bin/fail2ban-client
+user root
+
+[fw*]
+user root
+
+[freeradius*]
+env.radmin /usr/sbin/radmin
+env.socketfile /var/run/radiusd/radiusd.sock
+
+[slapd*]
+user ldap
+group ldap
+env.binddn cn=administrator,dc=localhost
+env.bindpw mysecurepassword
+env.dbstat /usr/bin/db_stat
+
+[squid*]
+env.squidhost localhost
+env.squidport 3127
+env.squiduser root
+env.squidpassword mysecurepassword
+
+[cup*]
+user root
+
+[asterisk_*]
+user root
+env.host localhost
+env.port 5038
+env.username admin
+env.secret amp111
+env.channels IAX2 SIP
+
+[df*]
+env.exclude none unknown iso9660 squashfs udf romfs ramfs debugfs binfmt_misc rpc_pipefs fuse.gvfs-fuse-daemon
+
+[named*]
+group named
+env.logfile /var/log/named/query.log
+
+[bind*]
+group named
+env.logfile /var/log/named/debug.log
+
+[nginx*]
+env.PERL_LWP_SSL_VERIFY_HOSTNAME 0
+env.ssl yes
+env.url https://localhost/nginx_status
+env.port 443
+
+[apache*]
+env.PERL_LWP_SSL_VERIFY_HOSTNAME 0
+env.ssl yes
+env.url   https://localhost/server-status?auto
+env.ports 8443
+
+[yum*]
+user root
+
+[temperature*]
+user root
+
+[snmp_*]
+env.version 2
+env.community public
+
+[esx_*]
+env.user administrator
+env.pass mysecurepassword
+env.vCenter vcenter
+

@@ -1,0 +1,54 @@
+############################################################
+# 🛠️ CUSTOM DOMAINS: Wildcard subdomain acceptance
+############################################################
+/.*\.mpmalak\.com/                                ACCEPT
+/.*\.casjay\.duckdns\.org/                        ACCEPT
+/.*\.mpm7tkm\.duckdns\.org/                       ACCEPT
+
+############################################################
+# 🌐 OWNED DOMAINS: Wildcard subdomain acceptance
+############################################################
+/.*\.amd64\.us/                                   ACCEPT
+/.*\.apmpproject\.org/                            ACCEPT
+/.*\.arm64\.us/                                   ACCEPT
+/.*\.casjay\.app/                                 ACCEPT
+/.*\.casjay\.casa/                                ACCEPT
+/.*\.casjay\.cc/                                  ACCEPT
+/.*\.casjay\.cloud/                               ACCEPT
+/.*\.casjay\.coffee/                              ACCEPT
+/.*\.casjay\.dev/                                 ACCEPT
+/.*\.casjaydns\.com/                              ACCEPT
+/.*\.casjaydns\.fyi/                              ACCEPT
+/.*\.casjay\.email/                               ACCEPT
+/.*\.casjay\.gdn/                                 ACCEPT
+/.*\.casjay\.in/                                  ACCEPT
+/.*\.casjay\.info/                                ACCEPT
+/.*\.casjay\.link/                                ACCEPT
+/.*\.casjay\.me/                                  ACCEPT
+/.*\.casjay\.nl/                                  ACCEPT
+/.*\.casjay\.org/                                 ACCEPT
+/.*\.casjay\.pro/                                 ACCEPT
+/.*\.casjay\.pw/                                  ACCEPT
+/.*\.casjaysdev\.pro/                             ACCEPT
+/.*\.casjay\.social/                              ACCEPT
+/.*\.casjay\.support/                             ACCEPT
+/.*\.casjay\.tel/                                 ACCEPT
+/.*\.casjay\.us/                                  ACCEPT
+/.*\.casjayvpn\.cc/                               ACCEPT
+/.*\.casjayvps\.us/                               ACCEPT
+/.*\.casjay\.work/                                ACCEPT
+/.*\.casjay\.xyz/                                 ACCEPT
+/.*\.csj\.lol/                                    ACCEPT
+/.*\.csj\.rocks/                                  ACCEPT
+/.*\.dockersrc\.us/                               ACCEPT
+/.*\.gsh\.li/                                     ACCEPT
+/.*\.ifcfg\.us/                                   ACCEPT
+/.*\.ipasrv\.us/                                  ACCEPT
+/.*\.malaks\.us/                                  ACCEPT
+/.*\.onhealth\.xyz/                               ACCEPT
+/.*\.pste\.us/                                    ACCEPT
+/.*\.redxt\.us/                                   ACCEPT
+/.*\.scour\.li/                                   ACCEPT
+/.*\.servicestat\.us/                             ACCEPT
+/.*\.sqldb\.us/                                   ACCEPT
+/.*\.vpn2me\.us/                                  ACCEPT

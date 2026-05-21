@@ -1,0 +1,2 @@
+# run apt update - runs daily at 2 am
+0 2 * * * root ping -c 1 google.com >/dev/null 2>&1 && DEBIAN_FRONTEND=noninteractive apt-get update -qq && apt-get upgrade -y -qq >/dev/null 2>&1

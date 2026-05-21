@@ -1,0 +1,57 @@
+# System-wide SSH client configuration
+# This affects all users unless overridden in ~/.ssh/config
+
+# Basic Settings
+Host *
+    # Enable X11 forwarding
+    ForwardX11 yes
+    ForwardX11Trusted yes
+
+    # Silence X11 connection errors
+    LogLevel ERROR
+
+    # Security: Disable agent forwarding by default (enable per-host if needed)
+    ForwardAgent no
+
+    # Connection Settings
+    # Keep connections alive to prevent timeouts
+    ServerAliveInterval 60
+    ServerAliveCountMax 3
+
+    # Enable connection multiplexing for faster subsequent connections
+    ControlMaster auto
+    ControlPath ~/.ssh/sockets/%r@%h-%p
+    ControlPersist 10m
+
+    # Compression (useful for slow connections)
+    Compression yes
+
+    # Security: Verify host keys
+    StrictHostKeyChecking ask
+    HashKnownHosts yes
+
+    # Try keyboard-interactive auth first, then password
+    PreferredAuthentications publickey,keyboard-interactive,password
+
+    # Security: Don't allow rhosts or host-based authentication
+    HostbasedAuthentication no
+
+    # Modern, secure ciphers and algorithms
+    Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
+    MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512,hmac-sha2-256
+    KexAlgorithms curve25519-sha256,curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256
+
+    # Use modern host key algorithms
+    HostKeyAlgorithms ssh-ed25519,rsa-sha2-512,rsa-sha2-256
+
+    # Enable GSSAPI authentication (Kerberos) unless you don't use it
+    GSSAPIAuthentication yes
+
+    # Connection timeouts
+    ConnectTimeout 30
+
+    # Don't send locale environment variables (can cause issues)
+    SendEnv LANG LC_CTYPE LC_NUMERIC LC_TIME LC_COLLATE LC_MONETARY LC_MESSAGES
+    SendEnv LC_PAPER LC_NAME LC_ADDRESS LC_TELEPHONE LC_MEASUREMENT
+    SendEnv LC_IDENTIFICATION LC_ALL LANGUAGE
+    SendEnv XMODIFIERS

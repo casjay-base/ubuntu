@@ -1,0 +1,3 @@
+###############################################################################
+#ZONE		INTERFACE		OPTIONS
+net         mynetworkdevice            detect          dhcp,tcpflags,nosmurfs

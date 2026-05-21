@@ -1,0 +1,139 @@
+#!/usr/bin/env sh
+# shellcheck shell=sh
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+##@Version           :  202308230150-git
+# @@Author           :  Jason Hempstead
+# @@Contact          :  jason@casjaysdev.pro
+# @@License          :  LICENSE.md
+# @@ReadME           :  fetch-repo-file --help
+# @@Copyright        :  Copyright: (c) 2023 Jason Hempstead, Casjays Developments
+# @@Created          :  Wednesday, Aug 23, 2023 13:39 EDT
+# @@File             :  fetch-repo-file
+# @@Description      :
+# @@Changelog        :  New script
+# @@TODO             :  Better documentation
+# @@Other            :
+# @@Resource         :
+# @@Terminal App     :  no
+# @@sudo/root        :  no
+# @@Template         :  shell/sh
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# shellcheck disable=SC2016
+# shellcheck disable=SC2031
+# shellcheck disable=SC2120
+# shellcheck disable=SC2155
+# shellcheck disable=SC2199
+# shellcheck disable=SC2317
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+APPNAME="$(basename "$0" 2>/dev/null)"
+VERSION="202308230150-git"
+RUN_USER="$USER"
+SET_UID="$(id -u)"
+SCRIPT_SRC_DIR="$(cd "$(dirname "$0")" && pwd)"
+FETCH_REPO_FILE_CWD="$(realpath "$PWD")"
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# colorization
+if [ "$SHOW_RAW" = "true" ]; then
+  __printf_color() { printf '%b' "$1\n" | tr -d '\t' | sed '/^%b$/d;s,\x1B\[ 0-9;]*[a-zA-Z],,g'; }
+else
+  __printf_color() { { [ -z "$2" ] || DEFAULT_COLOR=$2; } && printf "%b" "$(tput setaf "$DEFAULT_COLOR" 2>/dev/null)" "$1\n" "$(tput sgr0 2>/dev/null)"; }
+fi
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# check for command
+__cmd_exists() { which $1 >/dev/null 2>&1 || return 1; }
+__function_exists() { builtin type $1 >/dev/null 2>&1 || return 1; }
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# custom functions
+__save_remote_file() { curl -q -SLs "$1" | tee "$2" >/dev/null 2>&1 || return 1; }
+__rm_repo_files() { [ "${1:-$YUM_DELETE}" = "yes" ] && rm -Rf "/etc/yum.repos.d"/* >/dev/null 2>&1 || return 0; }
+__has_alt_kernel() { rpm -qa 2>/dev/null | grep -qE '^kernel-(ml|lt)-'; }
+__kernel_exclude_args() {
+  __has_alt_kernel || return 0
+  # Only the base kernel boot/module packages. kernel-tools, kernel-headers, kernel-devel, etc. update normally.
+  printf -- '--exclude=%s ' kernel kernel-core kernel-modules kernel-modules-core kernel-modules-extra kernel-abi-stablelists
+}
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+__backup_repo_files() {
+  [ -d "$BACKUP_DIR" ] || mkdir -p "$BACKUP_DIR"
+  cp -Rf "/etc/yum.repos.d/." "$BACKUP_DIR" 2>/dev/null || return 0
+}
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+__restore_repo_files() {
+  [ -n "$(ls -A "$BACKUP_DIR/" 2>/dev/null)" ] || return 0
+  cp -Rf "$BACKUP_DIR/${1:-}"* "/etc/yum.repos.d/" 2>/dev/null || return 0
+}
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Define variables
+YUM_DELETE="true"
+DEFAULT_COLOR="254"
+SET_DAY="$(date +'%d')"
+SET_MONTH="$(date +'%m')"
+FETCH_REPO_FILE_EXIT_STATUS=0
+BACKUP_DIR="${BACKUP_DIR:-$HOME/.local/backups/$APPNAME}/repos/$SET_MONTH/$SET_DAY"
+RELEASE_VER="$(grep --no-filename -s 'VERSION_ID=' /etc/*-release | awk -F '=' '{print $2}' | sed 's#"##g' | awk -F '.' '{print $1}' | grep '^')"
+RELEASE_NAME="$(grep --no-filename -s '^NAME=' /etc/*-release | awk -F'=' '{print $2}' | sed 's|"||g;s| .*||g' | tr '[:upper:]' '[:lower:]' | grep '^')"
+RELEASE_TYPE="$(grep --no-filename -s '^ID_LIKE=' /etc/*-release | awk -F'=' '{print $2}' | sed 's|"||g' | tr '[:upper:]' '[:lower:]' | tr ' ' '\n' | grep 'centos' | grep '^')"
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Main application
+__save_remote_file "https://raw.githubusercontent.com/rpm-devel/casjay-release/main/RPM-GPG-KEY-casjay" "/etc/pki/rpm-gpg/RPM-GPG-KEY-casjay"
+if [ "$RELEASE_TYPE" = "centos" ] && [ "$(hostname -s)" != "pbx" ]; then
+  printf '%b\n' "Updating yum repo info"
+  yum clean all >/dev/null 2>&1
+  if [ "$RELEASE_VER" -ge "9" ]; then
+    YUM_DELETE="yes"
+    REPO_REPLACE="no"
+    RELEASE_FILE="https://github.com/rpm-devel/casjay-release/raw/main/casjay.rh9.repo"
+  elif [ "$RELEASE_VER" -ge "8" ]; then
+    YUM_DELETE="yes"
+    REPO_REPLACE="yes"
+    RELEASE_FILE="https://github.com/rpm-devel/casjay-release/raw/main/casjay.rh8.repo"
+  elif [ "$RELEASE_VER" -lt "8" ]; then
+    YUM_DELETE="yes"
+    REPO_REPLACE="yes"
+    RELEASE_FILE="https://github.com/rpm-devel/casjay-release/raw/main/casjay.rh.repo"
+  else
+    YUM_DELETE="no"
+    REPO_REPLACE="yes"
+    RELEASE_FILE=""
+  fi
+else
+  printf '%b\n' "No repos specified"
+  yum clean all >/dev/null 2>&1
+  yum makecache -y >/dev/null 2>&1
+  exit $?
+fi
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+if [ -n "$RELEASE_FILE" ]; then
+  printf '%b\n' "Updating yum repos: This may take some time"
+  __backup_repo_files
+  __rm_repo_files "$YUM_DELETE"
+  __save_remote_file "$RELEASE_FILE" "/etc/yum.repos.d/casjay.repo"
+  if [ "$ARCH" != "x86_64" ] && [ "$REPO_REPLACE" = "yes" ]; then
+    sed -i 's|.*http://mirrors.elrepo.org/mirrors-elrepo.*|baseurl=https://rpm-devel.sourceforge.io/repo/RHEL/$releasever/$basearch/empty|g' /etc/yum.repos.d/casjay.repo
+    sed -i 's|.*https://mirror.usi.edu/pub/remi/enterprise/.*|baseurl=https://rpm-devel.sourceforge.io/repo/RHEL/$releasever/$basearch/empty|g' /etc/yum.repos.d/casjay.repo
+  fi
+  yum makecache -y >/dev/null 2>&1 || FETCH_REPO_FILE_EXIT_STATUS=1
+fi
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+if grep -sq "^SELINUX=" "/etc/selinux/config"; then
+  sed -i "^SELINUX=" "SELINUX=disabled" "/etc/selinux/config" 2>/dev/null
+fi
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+if [ "$FETCH_REPO_FILE_EXIT_STATUS" -eq 0 ]; then
+  YUM_KERNEL_EXCLUDES="$(__kernel_exclude_args)"
+  if [ -n "$YUM_KERNEL_EXCLUDES" ]; then
+    printf '%b\n' "Detected kernel-ml/kernel-lt installed - excluding base kernel from update"
+  fi
+  printf '%b\n' "Done updating repos - now running yum update -y --skip-broken --nogpgcheck"
+  yum update -y --skip-broken --nogpgcheck $YUM_KERNEL_EXCLUDES
+else
+  printf '%b\n' "Failed to update the repos"
+fi
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# End application
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# lets exit with code
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+exit $FETCH_REPO_FILE_EXIT_STATUS
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# ex: ts=2 sw=2 et filetype=sh

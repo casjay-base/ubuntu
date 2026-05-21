@@ -1,0 +1,5 @@
+EDITOR=vim
+BROWSER=firefox
+QT_STYLE_OVERRIDE=kvantum
+QT_QPA_PLATFORMTHEME=qt5ct
+INCUS_UI=/var/lib/incus/ui

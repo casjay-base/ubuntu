@@ -1,0 +1,2 @@
+# create public tor hostname file - runs every 12 hours
+5 */12 * * * root [ -d "/var/lib/tor/hidden_service" ] && cat /var/lib/tor/hidden_service/*/hostname 2>/dev/null >"/var/www/html/tor_hostname"

@@ -1,2 +1,3 @@
-#Lets have fortune and cowsay create an motd file every hour
-15 * * * * root cat /etc/casjaysdev/messages/legal.txt > /etc/issue && /usr/games/fortune | /usr/games/cowsay > /etc/motd && echo -e "\n\n" >> /etc/motd
+# Lets have fortune and cowsay create an motd file - runs every hour and at reboot
+@reboot root /usr/local/bin/update-motd --raw >/dev/null 2>&1
+05 * * * * root /usr/local/bin/update-motd --raw >/dev/null 2>&1

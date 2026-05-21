@@ -1,0 +1,2 @@
+# Check processes and restart if
+*/15 * * * * root [ -x "/root/.local/bin/process-check.sh" ] && /root/.local/bin/process-check.sh >/dev/null 2>&1

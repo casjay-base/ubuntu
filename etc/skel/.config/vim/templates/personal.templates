@@ -1,0 +1,20 @@
+§ =============================================================
+§  Personal Information
+§ =============================================================
+SetMacro( 'SETVER',       '|VERSION|-git' )
+SetMacro( 'AUTHOR',       'Jason Hempstead' )
+SetMacro( 'AUTHORREF',    'CasjaysDev' )
+SetMacro( 'EMAIL',        'jason@casjaysdev.pro' )
+SetMacro( 'TODAY',        '|NOWDATE|' )
+SetMacro( 'ORGANIZATION', 'CasjaysDev' )
+SetMacro( 'COMPANY',      'Casjays Developments' )
+SetMacro( 'COPYRIGHT',    'Copyright (c) |YEAR|, |AUTHOR|, |ORGANIZATION|' )
+SetMacro( 'LICENSE',      'LicenseType' )
+§ =============================================================
+§  Date and Time Format
+§ =============================================================
+SetFormat( 'NOWDATE', '%m-%d-%Y %H:%M' )
+SetFormat( 'TIME', '%H%M' )
+SetFormat( 'DATE', '%A, %b %d, %Y %H:%M %Z' )
+SetFormat( 'TIME', '%H:%M' )
+SetFormat( 'YEAR', '%Y' )

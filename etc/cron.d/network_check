@@ -1,0 +1,1 @@
+*/5 * * * * root /usr/local/share/CasjaysDev/scripts/bin/am_i_online check

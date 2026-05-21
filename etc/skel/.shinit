@@ -1,0 +1,45 @@
+#!/usr/bin/env sh
+# shellcheck shell=sh
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+##@Version           :  202208191502-git
+# @@Author           :  jason
+# @@Contact          :  jason@jasons-netbook
+# @@License          :  LICENSE.md
+# @@ReadME           :  man sh
+# @@Copyright        :  Copyright: (c) 2022 jason,
+# @@Created          :  Monday, Aug 22, 2022 02:11 EDT
+# @@File             :  .shinit
+# @@Description      :  sh init script
+# @@Changelog        :  newScript
+# @@TODO             :  Refactor code
+# @@Other            :
+# @@Resource         :
+# @@Terminal App     :  no
+# @@sudo/root        :  no
+# @@Template         :  template
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+if [ -r "$HOME/.profile" ]; then
+  . "$HOME/.profile"
+elif [ -r "/etc/profile" ]; then
+  . "/etc/profile"
+fi
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# get hostname info
+if which hostname >/dev/null 2>&1; then
+  HOSTNAME_FULL="$(hostname -f)"
+  HOSTNAME_SHORT="$(hostname -s)"
+elif which >/dev/null; then
+  HOSTNAME_FULL="$(hostnamecli -f)"
+  HOSTNAME_SHORT="$(hostnamecli -s)"
+else
+  HOSTNAME_FULL="$(hostnamectl hostname)"
+  HOSTNAME_SHORT="$(hostnamectl hostname | awk -F. '{print $1}')"
+fi
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+[ -n "$HOSTNAME_FULL" ] && HOSTNAME="$HOSTNAME_FULL" || HOSTNAME="$HOSTNAME_SHORT"
+unset HOSTNAME_SHORT HOSTNAME_FULL
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+PS1="$RED$SHELL_NAME:$GREEN$USER@$HOSTNAME$NC: $YELLOW$PWD$NC : $BLACK🐚$NC "
+export PS1 HOSTNAME
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+[ -f "$HOME/misc/shell/aliases/00-aliases.sh" ] && . "$HOME/misc/shell/aliases/00-aliases.sh"

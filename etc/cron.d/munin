@@ -1,0 +1,2 @@
+# Fix munin cron - runs every 5 minutes
+*/5 * * * * munin [ -x /usr/bin/munin-cron ] && /usr/bin/munin-cron >/dev/null 2>&1

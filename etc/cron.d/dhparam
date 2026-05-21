@@ -1,0 +1,2 @@
+# create/update dhparam - runs Tuesday at 12
+0 12 * * 2 root [ -x "/root/.local/bin/root_dhparams.sh" ] && /root/.local/bin/root_dhparams.sh

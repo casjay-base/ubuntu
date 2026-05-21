@@ -1,0 +1,5 @@
+###############################################################################
+#SOURCE		DEST		POLICY	LOGLEVEL	LIMIT	CONNLIMIT
+fw      	net	     	ACCEPT
+net     	all	     	ACCEPT
+all     	all	     	ACCEPT

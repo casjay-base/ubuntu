@@ -1,2 +1,2 @@
-# Clean System cron job
-5 4 * * * root /usr/local/bin/clean-system >/dev/null 2>&1
+# Clean old System logs - runs at At 04:15
+15 04 * * * root /usr/local/bin/clean-system --raw >/dev/null 2>&1

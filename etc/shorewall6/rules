@@ -1,0 +1,9 @@
+##############################################################################################################################################################
+#ACTION		SOURCE		DEST		PROTO	DPORT	SPORT	ORIGDEST	RATE	USER	MARK	CONNLIMIT	TIME	HEADERS	SWITCH	HELPER
+
+?SECTION ALL
+?SECTION ESTABLISHED
+?SECTION RELATED
+?SECTION INVALID
+?SECTION UNTRACKED
+?SECTION NEW

@@ -1,0 +1,7 @@
+NETWORKING="yes"
+NETWORKING_IPV6="yes"
+DOMAINNAME="mydomain"
+HOSTNAME="myserverdomainname"
+IPV6_AUTOCONF=yes
+#IPV6_DEFAULTDEV="mynetworkdevice"
+#GATEWAYDEV="mynetworkdevice"

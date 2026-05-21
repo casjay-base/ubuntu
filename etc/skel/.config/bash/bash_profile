@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# shellcheck shell=bash
+# shellcheck disable=SC2317
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+##@Version       : 202103251632-git
+# @Author        : Jason Hempstead
+# @Contact       : jason@casjaysdev.pro
+# @License       : LICENSE.md
+# @ReadME        : bash_profile --help
+# @Copyright     : Copyright: (c) 2021 Jason Hempstead, CasjaysDev
+# @Created       : Thursday, Mar 25, 2021 18:02 EDT
+# @File          : bash_profile
+# @Description   : ~/.bash_profile: executed by bash at login.
+# @TODO          :
+# @Other         :
+# @Resource      :
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+#Ensure we are running interactively
+[[ $- != *i* ]] && return
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# include .bashrc if it exists
+if [ -n "$BASH_VERSION" ]; then
+  if [ -f "$HOME/.bashrc" ]; then
+    . "$HOME/.bashrc"
+  fi
+fi
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# end

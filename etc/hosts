@@ -1,0 +1,3 @@
+# Hosts file
+127.0.0.1 myserverdomainname myhostnameshort unknown.myserverdomainname watchtower.myserverdomainname localhost static cgi watchtower
+::1 myserverdomainname myhostnameshort unknown.myserverdomainname watchtower.myserverdomainname localhost static cgi watchtower

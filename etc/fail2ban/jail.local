@@ -1,0 +1,74 @@
+[INCLUDES]
+before = paths-debian.conf
+
+# Fail2Ban configuration file
+[DEFAULT]
+bantime  = 604800
+findtime  = 3600
+maxretry = 5
+backend = auto
+usedns = warn
+
+[fail2ban]
+enabled = true
+filter = fail2ban
+action   = shorewall
+logpath = /var/log/fail2ban.log
+
+[ssh]
+enabled  = true
+filter   = sshd
+action   = shorewall
+logpath  = /var/log/auth.log
+
+[proftpd]
+enabled  = true
+filter   = proftpd
+action   = shorewall
+logpath  = /var/log/auth.log
+logpath  = /var/log/proftpd/auth.log
+
+[postfix]
+enabled  = true
+filter   = postfix
+action   = shorewall
+logpath  = /var/log/mail.log
+
+[apache]
+enabled  = true
+filter   = apache-auth
+action   = shorewall
+logpath  = /var/log/apache2/*error_log
+
+[named-udp]
+enabled  = true
+filter   = named-refused
+action   = shorewall
+logpath  = /var/log/named/security.log
+
+[named-tcp]
+enabled  = true
+filter   = named-refused
+action   = shorewall
+logpath  = /var/log/named/security.log
+
+[mysqld-auth]
+enabled = false
+filter  = mysqld-auth
+action   = shorewall
+logpath = /var/log/mysql/mysql.log
+
+[dovecot]
+enabled  = false
+filter   = dovecot
+maxretry = 5
+bantime  = 3600
+findtime  = 120
+action   = shorewall
+logpath  = /var/log/mail.log
+
+[webmin-auth]
+enabled = false
+filter  = webmin-auth
+action   = shorewall
+logpath = /var/log/auth.log
