@@ -59,6 +59,7 @@ smtpd_recipient_restrictions     = permit_mynetworks, permit_sasl_authenticated,
 ########################
 # 🧰 Outbound policy
 ########################
+smtp_tls_wrappermode            = yes
 smtp_tls_security_level          = encrypt
 smtp_tls_loglevel                = 1
 smtp_tls_protocols               = !SSLv2, !SSLv3
