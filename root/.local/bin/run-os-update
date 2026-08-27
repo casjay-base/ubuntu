@@ -504,6 +504,7 @@ else
   echo -e "Setting IP to $MYSERVER_ADDRESS_IPV6"
   find -L "$APP_TMP_DIR" -type f -exec sed -i "s#mycurrentipaddress_6#$MYSERVER_ADDRESS_IPV6#g" {} \; &>/dev/null
   echo -e "Setting full hostname to $MYSERVER_HOST_NAME"
+  find -L "$APP_TMP_DIR" -type f -exec sed -i "s#myserverhostname#$MYSERVER_HOST_NAME#g" {} \; &>/dev/null
   find -L "$APP_TMP_DIR" -type f -exec sed -i "s#myserverdomainname#$HOSTNAME_FULL#g" {} \; &>/dev/null
   echo -e "Setting short hostname to $HOSTNAME_SHORT"
   find -L "$APP_TMP_DIR" -type f -exec sed -i "s#myhostnameshort#$HOSTNAME_SHORT#g" {} \; &>/dev/null
