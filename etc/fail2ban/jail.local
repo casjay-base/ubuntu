@@ -2,73 +2,133 @@
 before = paths-debian.conf
 
 # Fail2Ban configuration file
+#
+# casjay-base ships to many different server roles, not just this user's own
+# infra, and not every host runs every service (mail, dns, ftp, a database) -
+# and pkmgr/min.sh only ever runs once, at bootstrap, so a service installed
+# later would never get its jail flipped on if enablement depended on
+# detecting the service at bootstrap time. Instead every jail below stays
+# permanently `enabled = true`, and min.sh unconditionally pre-creates each
+# jail's logpath as an empty file at bootstrap (see the "install and enable
+# intrusion detection/prevention" block in that script). fail2ban only
+# errors at jail-start when a logpath glob resolves to zero files - an empty
+# placeholder file satisfies that, so a host that never installs a given
+# service just watches a file that never grows (no error, no bans, no
+# noise). The moment that service IS installed and starts appending to the
+# same path, the already-running jail picks it up immediately - no
+# re-bootstrap, no restart, no separate sync step needed.
+# Do not flip a jail back to `enabled = false` or remove its bootstrap
+# pre-create step - either one reintroduces the exact staleness/noise
+# problem this design avoids.
 [DEFAULT]
 bantime  = 604800
 findtime  = 3600
 maxretry = 5
 backend = auto
 usedns = warn
+# Merged from the former etc/fail2ban/ips.txt (removed - fail2ban never
+# auto-loads a bare .txt file, so that file was dead configuration; folding
+# its ranges in here is what actually makes them take effect). Keeps
+# fail2ban from ever banning RFC1918 management/LAN traffic in addition to
+# loopback.
+ignoreip = 127.0.0.0/8 10.0.0.0/8 172.16.0.0/12 192.168.0.0/16
 
 [fail2ban]
 enabled = true
 filter = fail2ban
-action   = shorewall
+action   = %(banaction)s
 logpath = /var/log/fail2ban.log
 
 [ssh]
 enabled  = true
 filter   = sshd
-action   = shorewall
+action   = %(banaction)s
 logpath  = /var/log/auth.log
 
 [proftpd]
 enabled  = true
 filter   = proftpd
-action   = shorewall
+action   = %(banaction)s
 logpath  = /var/log/auth.log
-logpath  = /var/log/proftpd/auth.log
+           /var/log/proftpd/auth.log
 
 [postfix]
 enabled  = true
 filter   = postfix
-action   = shorewall
+action   = %(banaction)s
 logpath  = /var/log/mail.log
 
 [apache]
 enabled  = true
 filter   = apache-auth
-action   = shorewall
+action   = %(banaction)s
 logpath  = /var/log/apache2/*error_log
+
+# nginx is the internet-facing TLS terminator, so these jails see the real
+# client IP; the apache jail above only ever sees the nginx proxy address
+[nginx-http-auth]
+enabled  = true
+filter   = nginx-http-auth
+action   = %(banaction)s
+logpath  = /var/log/nginx/error.log
+
+[nginx-botsearch]
+enabled  = true
+filter   = nginx-botsearch
+action   = %(banaction)s
+logpath  = /var/log/nginx/access.log
+
+[nginx-limit-req]
+enabled  = true
+filter   = nginx-limit-req
+action   = %(banaction)s
+logpath  = /var/log/nginx/error.log
 
 [named-udp]
 enabled  = true
 filter   = named-refused
-action   = shorewall
+action   = %(banaction)s
 logpath  = /var/log/named/security.log
 
 [named-tcp]
 enabled  = true
 filter   = named-refused
-action   = shorewall
+action   = %(banaction)s
 logpath  = /var/log/named/security.log
 
 [mysqld-auth]
-enabled = false
+enabled = true
 filter  = mysqld-auth
-action   = shorewall
+action   = %(banaction)s
 logpath = /var/log/mysql/mysql.log
 
+[mssql-auth]
+enabled = true
+filter  = mssql-auth
+action   = %(banaction)s
+logpath = /var/opt/mssql/log/errorlog
+
 [dovecot]
-enabled  = false
+enabled  = true
 filter   = dovecot
 maxretry = 5
 bantime  = 3600
 findtime  = 120
-action   = shorewall
+action   = %(banaction)s
 logpath  = /var/log/mail.log
 
 [webmin-auth]
-enabled = false
+enabled = true
 filter  = webmin-auth
-action   = shorewall
+action   = %(banaction)s
 logpath = /var/log/auth.log
+
+# Long ban for hosts that come back after an earlier ban expires
+[recidive]
+enabled  = true
+filter   = recidive
+action   = %(banaction)s
+logpath  = /var/log/fail2ban.log
+bantime  = 2592000
+findtime = 604800
+maxretry = 3

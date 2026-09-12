@@ -210,12 +210,12 @@ export IS_OS_UPDATE="yes"
 export FORCE_INST="${FORCE_INST:-}"
 export TIME_ZONE="${TZ:-America/New_York}"
 export STATICSITE="${STATICSITE:-$(hostname -f)}"
-export SERVICES_ENABLE="httpd nginx munin-node cockpit postfix "
+export SERVICES_ENABLE="apache2 nginx munin-node cockpit postfix fail2ban "
 export SERVICES_ENABLE+="uptimed downtimed php-fpm proftpd rsyslog chronyd snmpd cockpit "
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 export SERVICES_DISABLE="firewalld auditd kdump iscsid.socket lvm2-lvmpolld.socket lvm2-monitor "
 export SERVICES_DISABLE+="iscsi.service iscsiuio.socket lvm2-lvmetad.socket radvd "
-export SERVICES_DISABLE+="fail2ban shorewall shorewall6 named dhcpd dhcpd6 mdmonitor "
+export SERVICES_DISABLE+="shorewall shorewall6 named dhcpd dhcpd6 mdmonitor "
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 export REMOTE_VERSION="$(curl -q -LSsf "https://github.com/casjay-base/centos/raw/main/version.txt" | head -n1)"
 [ -f "/etc/casjaysdev/updates/versions/configs.txt" ] && export INSTALLED_VERSION="$(head -n1 <"/etc/casjaysdev/updates/versions/configs.txt" 2>/dev/null)"
@@ -370,27 +370,27 @@ if [ -z "$FORCE_INST" ] && [ "$REMOTE_VERSION" = "$INSTALLED_VERSION" ]; then
   echo -e "There are no updates available, however, I am going to run the fixes"
   echo -e "Fixing web servers"
   curl -q -LSsf "https://github.com/casjay-base/centos/raw/refs/heads/main/etc/nginx/nginx.conf" -o "/etc/nginx/nginx.conf"
-  if [ -f "/etc/apache2/conf/httpd.conf" ]; then
-    if ! grep -qi 'ServerTokens Prod$' "/etc/apache2/conf/httpd.conf"; then
-      sed -i 's|ServerTokens .*|ServerTokens Prod|g' /etc/apache2/conf/httpd.conf
+  if [ -f "/etc/apache2/apache2.conf" ]; then
+    if ! grep -qi -- 'ServerTokens Prod$' "/etc/apache2/apache2.conf"; then
+      sed -i 's|ServerTokens .*|ServerTokens Prod|g' "/etc/apache2/apache2.conf"
     fi
   fi
   if [ -n "$GET_WEB_USER" ]; then
     [ -f "/etc/nginx/nginx.conf" ] && sed -i "s|user .*|user  $GET_WEB_USER;|g" "/etc/nginx/nginx.conf"
     [ -f "/etc/php/8.2/fpm/pool.d/www.conf" ] && sed -i "s|user .*|user = $GET_WEB_USER|g" "/etc/php/8.2/fpm/pool.d/www.conf"
-    [ -f "/etc/apache2/conf/httpd.conf" ] && sed -i "s|User .*|User $GET_WEB_USER|g" "/etc/apache2/conf/httpd.conf"
+    [ -f "/etc/apache2/apache2.conf" ] && sed -i "s|User .*|User $GET_WEB_USER|g" "/etc/apache2/apache2.conf"
     for apache_dir in "/usr/local/share/httpd" "/var/www"; do
       [ -d "$apache_dir" ] && chown -Rf $GET_WEB_USER "$apache_dir"
     done
   fi
   if [ -n "$GET_WEB_GROUP" ]; then
     [ -f "/etc/php/8.2/fpm/pool.d/www.conf" ] && sed -i "s|group .*|group = $GET_WEB_GROUP|g" "/etc/php/8.2/fpm/pool.d/www.conf"
-    [ -f "/etc/apache2/conf/httpd.conf" ] && sed -i "s|Group .*|Group $GET_WEB_GROUP|g" "/etc/apache2/conf/httpd.conf"
+    [ -f "/etc/apache2/apache2.conf" ] && sed -i "s|Group .*|Group $GET_WEB_GROUP|g" "/etc/apache2/apache2.conf"
     for apache_dir in "/usr/local/share/httpd" "/var/www"; do
       [ -d "$apache_dir" ] && chgrp -Rf $GET_WEB_GROUP "$apache_dir"
     done
   fi
-  for service in nginx httpd php-fpm; do __systemctl_restart "$service"; done
+  for service in nginx apache2 php-fpm; do __systemctl_restart "$service"; done
   echo -e "Fixing web servers has finished"
   echo -e "Updating the cron file"
   cat <<EOF >"/etc/cron.d/run-os-update"
@@ -532,9 +532,9 @@ else
     cp -Rf "$APP_TMP_DIR/etc/nginx/nginx.conf" "/etc/nginx/nginx.conf"
   fi
 
-  if [ -f "$APP_TMP_DIR/etc/apache2/conf/httpd.conf" ] && [ -d "/etc/apache2/conf" ]; then
-    echo -e "$APP_TMP_DIR/etc/apache2/conf/httpd.conf >/etc/apache2/conf/httpd.conf"
-    cp -Rf "$APP_TMP_DIR/etc/apache2/conf/httpd.conf" "/etc/apache2/conf/httpd.conf"
+  if [ -f "$APP_TMP_DIR/etc/apache2/apache2.conf" ] && [ -d "/etc/apache2" ]; then
+    echo -e "$APP_TMP_DIR/etc/apache2/apache2.conf >/etc/apache2/apache2.conf"
+    cp -Rf "$APP_TMP_DIR/etc/apache2/apache2.conf" "/etc/apache2/apache2.conf"
   fi
 
   if grep -qs "^named:" "/etc/passwd"; then
@@ -601,9 +601,9 @@ else
       sed -i '0,/^user .*/s//user = '$GET_WEB_USER'/' "/etc/php/8.2/fpm/pool.d/www.conf"
       grep -sqh "^user = $GET_WEB_USER" "/etc/php/8.2/fpm/pool.d/www.conf" || echo "Failed to change the user in /etc/php/8.2/fpm/pool.d/www.conf"
     fi
-    if [ -f "/etc/apache2/conf/httpd.conf" ]; then
-      sed -i '0,/^User .*/s//User '$GET_WEB_USER'/' "/etc/apache2/conf/httpd.conf"
-      grep -sqh "^User $GET_WEB_USER" "/etc/apache2/conf/httpd.conf" || echo "Failed to change the user in /etc/apache2/conf/httpd.conf"
+    if [ -f "/etc/apache2/apache2.conf" ]; then
+      sed -i '0,/^User .*/s//User '$GET_WEB_USER'/' "/etc/apache2/apache2.conf"
+      grep -sqh -- "^User $GET_WEB_USER" "/etc/apache2/apache2.conf" || echo "Failed to change the user in /etc/apache2/apache2.conf"
     fi
     for apache_dir in "/usr/local/share/httpd" "/var/www"; do
       [ -d "$apache_dir" ] && chown -Rf $GET_WEB_USER "$apache_dir"
@@ -614,17 +614,17 @@ else
       sed -i '0,/^group .*/s//group = '$GET_WEB_GROUP'/' "/etc/php/8.2/fpm/pool.d/www.conf"
       grep -sqh "^group = $GET_WEB_GROUP" "/etc/php/8.2/fpm/pool.d/www.conf" || echo "Failed to change the group in /etc/php/8.2/fpm/pool.d/www.conf"
     fi
-    if [ -f "/etc/apache2/conf/httpd.conf" ]; then
-      sed -i '0,/^Group .*/s//Group '$GET_WEB_GROUP'/' "/etc/apache2/conf/httpd.conf"
-      grep -sqh "^Group $GET_WEB_GROUP" "/etc/apache2/conf/httpd.conf" || echo "Failed to change the group in /etc/apache2/conf/httpd.conf"
+    if [ -f "/etc/apache2/apache2.conf" ]; then
+      sed -i '0,/^Group .*/s//Group '$GET_WEB_GROUP'/' "/etc/apache2/apache2.conf"
+      grep -sqh -- "^Group $GET_WEB_GROUP" "/etc/apache2/apache2.conf" || echo "Failed to change the group in /etc/apache2/apache2.conf"
     fi
     for apache_dir in "/usr/local/share/httpd" "/var/www"; do
       [ -d "$apache_dir" ] && chgrp -Rf $GET_WEB_GROUP "$apache_dir"
     done
   fi
-  if [ -f "/etc/apache2/conf/httpd.conf" ]; then
-    if ! grep -qi 'ServerTokens Prod$' /etc/apache2/conf/httpd.conf; then
-      sed -i 's|ServerTokens.*|ServerTokens Prod|g' "/etc/apache2/conf/httpd.conf"
+  if [ -f "/etc/apache2/apache2.conf" ]; then
+    if ! grep -qi -- 'ServerTokens Prod$' "/etc/apache2/apache2.conf"; then
+      sed -i 's|ServerTokens.*|ServerTokens Prod|g' "/etc/apache2/apache2.conf"
     fi
   fi
   echo -e "Done setting up web server\n"
@@ -673,7 +673,7 @@ EOF
       if [ ! -f "/etc/letsencrypt/renewal-hooks/post/httpd.sh" ]; then
         cat <<EOF | tee "/etc/letsencrypt/renewal-hooks/post/httpd.sh" >/dev/null
 #!/usr/bin/env sh
-systemctl is-enabled httpd >/dev/null 2>&1 && systemctl reload httpd >/dev/null 2>&1
+systemctl is-enabled apache2 >/dev/null 2>&1 && systemctl reload apache2 >/dev/null 2>&1
 
 EOF
       fi
