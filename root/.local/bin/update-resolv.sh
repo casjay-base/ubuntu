@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-##@Version           :  202305090019-git
+##@Version           :  202609131048-git
 # @@Author           :  Jason Hempstead
 # @@Contact          :  git-admin@casjaysdev.pro
 # @@License          :  LICENSE.md
@@ -18,7 +18,7 @@
 # @@Template         :  bash/system
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 __fetch() {
-  curl -q -LSsf "https://github.com/casjay-base/centos/raw/main/etc/resolv.conf" -o "/tmp/resolv.conf"
+  curl -q -LSsf "https://github.com/casjay-base/rhel/raw/main/etc/resolv.conf" -o "/tmp/resolv.conf"
   return $?
 }
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -36,7 +36,7 @@ EOF
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 if [ "$1" = "update" ]; then
   exitCode=0
-  RAW_URL="https://raw.githubusercontent.com/casjay-base/centos/main/root/.local/bin"
+  RAW_URL="https://raw.githubusercontent.com/casjay-base/rhel/main/root/.local/bin"
   for f in root_certbot.sh root_changeip.sh root_clean.sh root_dhparams.sh run-os-update update-resolv.sh; do
     curl -q -LSsf "$RAW_URL/$f" -o "/tmp/$f" 2>/dev/null && true || { exitCode=$(($exitCode + 1)) && false; }
     [ -f "/tmp/$f" ] && chmod -Rf 755 "/tmp/$f" && mv -f "/tmp/$f" "/root/.local/bin/$f"

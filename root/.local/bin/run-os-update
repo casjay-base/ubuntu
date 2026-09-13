@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-##@Version           :  202308102203-git
+##@Version           :  202609131048-git
 # @@Author           :  Jason Hempstead
 # @@Contact          :  git-admin@casjaysdev.pro
 # @@License          :  LICENSE.md
@@ -18,7 +18,7 @@
 # @@Template         :  bash/system
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 APPNAME="run-os-update"
-VERSION="202506190941-git"
+VERSION="202609131048-git"
 HOME="${USER_HOME:-$HOME}"
 USER="${SUDO_USER:-$USER}"
 RUN_USER="${RUN_USER:-$USER}"
@@ -40,7 +40,7 @@ if ! type -p execute &>/dev/null; then execute() { echo "$2" && eval "$1" || ret
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 __repo_file() {
   local statusCode=0
-  bash -c "$(curl -q -LSsf "https://github.com/casjay-base/centos/raw/main/root/.local/bin/fetch-repo-file" || return 10)"
+  bash -c "$(curl -q -LSsf "https://github.com/casjay-base/rhel/raw/main/root/.local/bin/fetch-repo-file" || return 10)"
   statusCode=$?
   [ "$statusCode" -eq 0 ] && printf '%b\n' "${YELLOW}Done updating repos${NC}"
   return $statusCode
@@ -217,7 +217,7 @@ export SERVICES_DISABLE="firewalld auditd kdump iscsid.socket lvm2-lvmpolld.sock
 export SERVICES_DISABLE+="iscsi.service iscsiuio.socket lvm2-lvmetad.socket radvd "
 export SERVICES_DISABLE+="shorewall shorewall6 named dhcpd dhcpd6 mdmonitor "
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-export REMOTE_VERSION="$(curl -q -LSsf "https://github.com/casjay-base/centos/raw/main/version.txt" | head -n1)"
+export REMOTE_VERSION="$(curl -q -LSsf "https://github.com/casjay-base/rhel/raw/main/version.txt" | head -n1)"
 [ -f "/etc/casjaysdev/updates/versions/configs.txt" ] && export INSTALLED_VERSION="$(head -n1 <"/etc/casjaysdev/updates/versions/configs.txt" 2>/dev/null)"
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 [ -f "/etc/casjaysdev/updates/versions/os_version.txt" ] && RELEASE_VER="$(<"/etc/casjaysdev/updates/versions/os_version.txt")"
@@ -286,7 +286,7 @@ fi
 if [ ! -f "/tmp/run-os-update" ] && ping -c 2 1.1.1.1 &>/dev/null; then
   echo "Updating the installer before proceeding"
   export DOCKER_UPDATE INSTALLED_VERSION SCRIPTS_UPDATE STATICSITE USER FORCE_INST REPO_UPDATE IS_RERUNNING_SCRIPT="yes" IS_OS_UPDATE="yes"
-  if curl -q -LSsf "https://raw.githubusercontent.com/casjay-base/centos/main/root/.local/bin/run-os-update" -o "/tmp/run-os-update" 2>/dev/null; then
+  if curl -q -LSsf "https://raw.githubusercontent.com/casjay-base/rhel/main/root/.local/bin/run-os-update" -o "/tmp/run-os-update" 2>/dev/null; then
     if [ -f "/tmp/run-os-update" ]; then
       chmod 755 "/tmp/run-os-update"
       eval "/tmp/run-os-update" && exitCode=0 || exitCode=1
@@ -319,8 +319,8 @@ fi
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 if [ "$SCRIPTS_UPDATE" = "true" ]; then
   exitCode="0"
-  RAW_REPO_URL="https://raw.githubusercontent.com/casjay-base/centos/main/root/.local/bin"
-  API_FILE_URL="https://api.github.com/repos/casjay-base/centos/contents/root/.local/bin?ref=main"
+  RAW_REPO_URL="https://raw.githubusercontent.com/casjay-base/rhel/main/root/.local/bin"
+  API_FILE_URL="https://api.github.com/repos/casjay-base/rhel/contents/root/.local/bin?ref=main"
   file_list="$(curl -q -LSsf "$API_FILE_URL" | jq -r '.[].url' | awk -F '?' '{print $1}')"
   if [ "$REMOTE_VERSION" = "$INSTALLED_VERSION" ]; then
     echo "Reinstalling from version $INSTALLED_VERSION"
@@ -369,7 +369,7 @@ fi
 if [ -z "$FORCE_INST" ] && [ "$REMOTE_VERSION" = "$INSTALLED_VERSION" ]; then
   echo -e "There are no updates available, however, I am going to run the fixes"
   echo -e "Fixing web servers"
-  curl -q -LSsf "https://github.com/casjay-base/centos/raw/refs/heads/main/etc/nginx/nginx.conf" -o "/etc/nginx/nginx.conf"
+  curl -q -LSsf "https://github.com/casjay-base/rhel/raw/refs/heads/main/etc/nginx/nginx.conf" -o "/etc/nginx/nginx.conf"
   if [ -f "/etc/apache2/apache2.conf" ]; then
     if ! grep -qi -- 'ServerTokens Prod$' "/etc/apache2/apache2.conf"; then
       sed -i 's|ServerTokens .*|ServerTokens Prod|g' "/etc/apache2/apache2.conf"
@@ -395,7 +395,7 @@ if [ -z "$FORCE_INST" ] && [ "$REMOTE_VERSION" = "$INSTALLED_VERSION" ]; then
   echo -e "Updating the cron file"
   cat <<EOF >"/etc/cron.d/run-os-update"
 # Update system configurations everyday at 4am from the repo
-0 4 * * * root curl -q -LSsf "https://github.com/casjay-base/centos/raw/main/root/.local/bin/run-os-update" | bash -s -- --cron >"$LOG_FILE" 2>&1
+0 4 * * * root curl -q -LSsf "https://github.com/casjay-base/rhel/raw/main/root/.local/bin/run-os-update" | bash -s -- --cron >"$LOG_FILE" 2>&1
 EOF
   echo -e "Done updating the cron file\n"
   if [ "$CRON_UPDATE" = "yes" ]; then
@@ -473,7 +473,7 @@ else
 
   echo -e "Cloning the $RELEASE_NAME repo"
   [ -d "$APP_TMP_DIR" ] && rm -Rf "$APP_TMP_DIR"
-  git clone -q "https://github.com/casjay-base/centos" "$APP_TMP_DIR"
+  git clone -q "https://github.com/casjay-base/rhel" "$APP_TMP_DIR"
   echo -e "Done cloning the repo\n"
 
   echo -e "Configuring files"
@@ -794,7 +794,7 @@ EOF
   echo -e "Updating the cron file"
   cat <<EOF >"/etc/cron.d/run-os-update"
 # Update system configurations everyday at 4am from the repo
-0 4 * * * root curl -q -LSsf "https://github.com/casjay-base/centos/raw/main/root/.local/bin/run-os-update" | bash -s -- --cron >"$LOG_FILE" 2>&1
+0 4 * * * root curl -q -LSsf "https://github.com/casjay-base/rhel/raw/main/root/.local/bin/run-os-update" | bash -s -- --cron >"$LOG_FILE" 2>&1
 EOF
   echo -e "Done updating the cron file\n"
 

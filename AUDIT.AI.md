@@ -229,7 +229,7 @@ immediate discard; everything else rotates monthly OR at a size threshold
   entry (`run-os-update`, `process-check.sh`, `clean-system`,
   `update-resolv.sh`, `root_certbot.sh`), all running as root. Unreviewed;
   this is where finding #9's actual downloaded payload lives.
-- `pkmgr/centos/scripts/min.sh` and `casjay-base/sync.sh` — not read for
+- `pkmgr/rhel/scripts/min.sh` and `casjay-base/sync.sh` — not read for
   this pass; `sync.sh` decides how every finding above gets rewritten for
   the other 6 distros, so a per-distro re-check is needed after fixes land.
 - File modes/ownership on deploy — this repo can't express them; several
