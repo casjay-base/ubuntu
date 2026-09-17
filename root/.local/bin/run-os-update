@@ -40,7 +40,7 @@ if ! type -p execute &>/dev/null; then execute() { echo "$2" && eval "$1" || ret
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 __repo_file() {
   local statusCode=0
-  bash -c "$(curl -q -LSsf "https://github.com/casjay-base/rhel/raw/main/root/.local/bin/fetch-repo-file" || return 10)"
+  bash -c "$(curl -q -LSsf "https://github.com/casjay-base/rhel/raw/main/root/.local/bin/fetch-repo-file" || return 1)"
   statusCode=$?
   [ "$statusCode" -eq 0 ] && printf '%b\n' "${YELLOW}Done updating repos${NC}"
   return $statusCode
@@ -58,7 +58,7 @@ __run_updater() {
 __kernel_ml() {
   local exitC=0
   local kernel_installed="$(rpm -qa kernel-ml 2>/dev/null | tail -n1)"
-  local kernel_avail="$(yum search kernel-ml 2>&1 | awk '{print $1}' | grep -- '^kernel-ml-.*[.]' | grep -Ev -- 'devel|headers' || return)"
+  local kernel_avail="$(yum search kernel-ml 2>&1 | awk '{print $1}' | grep -- '^kernel-ml-.*[.]' | grep -Ev -- 'devel|headers' || return 1)"
   # EL7 ships monolithic kernel-ml; EL8/9 split into kernel-ml + kernel-ml-core + kernel-ml-modules*. --skip-broken handles both.
   local kml_pkgs="kernel-ml kernel-ml-core kernel-ml-modules kernel-ml-modules-extra"
   if [ -n "$kernel_installed" ]; then
@@ -69,7 +69,7 @@ __kernel_ml() {
   elif [ -n "$kernel_avail" ]; then
     echo "Switching to the newest kernel from elrepo - This may take a few minutes"
     # Only remove base kernel boot/module packages. Keep kernel-tools, kernel-headers, kernel-devel etc.
-    pkgs="$(rpm -qa kernel kernel-core kernel-modules kernel-modules-core kernel-modules-extra 2>/dev/null)"
+    local pkgs="$(rpm -qa kernel kernel-core kernel-modules kernel-modules-core kernel-modules-extra 2>/dev/null)"
     [ -n "$pkgs" ] && for pkg in $pkgs; do rpm -ev --nodeps $pkg >/dev/null 2>&1; done
     __devnull yum update -yyq --exclude 'kernel' --exclude 'kernel-core' --exclude 'kernel-modules*' >/dev/null
     __devnull yum install -yyq --skip-broken $kml_pkgs >/dev/null || exitC=1
@@ -85,7 +85,7 @@ __kernel_ml() {
 __kernel_lt() {
   local exitC=0
   local kernel_installed="$(rpm -qa kernel-lt 2>/dev/null | tail -n1)"
-  local kernel_avail="$(yum search kernel-lt 2>&1 | awk '{print $1}' | grep -- '^kernel-lt-.*[.]' | grep -Ev -- 'devel|headers' || return)"
+  local kernel_avail="$(yum search kernel-lt 2>&1 | awk '{print $1}' | grep -- '^kernel-lt-.*[.]' | grep -Ev -- 'devel|headers' || return 1)"
   # EL7 ships monolithic kernel-lt; EL8/9 split into kernel-lt + kernel-lt-core + kernel-lt-modules*. --skip-broken handles both.
   local klt_pkgs="kernel-lt kernel-lt-core kernel-lt-modules kernel-lt-modules-extra"
   if [ -n "$kernel_installed" ]; then
@@ -96,7 +96,7 @@ __kernel_lt() {
   elif [ -n "$kernel_avail" ]; then
     echo "Switching to the newest kernel from elrepo - This may take a few minutes"
     # Only remove base kernel boot/module packages. Keep kernel-tools, kernel-headers, kernel-devel etc.
-    pkgs="$(rpm -qa kernel kernel-core kernel-modules kernel-modules-core kernel-modules-extra 2>/dev/null)"
+    local pkgs="$(rpm -qa kernel kernel-core kernel-modules kernel-modules-core kernel-modules-extra 2>/dev/null)"
     [ -n "$pkgs" ] && for pkg in $pkgs; do rpm -ev --nodeps $pkg >/dev/null 2>&1; done
     __devnull yum update -yyq --exclude 'kernel' --exclude 'kernel-core' --exclude 'kernel-modules*' >/dev/null
     __devnull yum install -yyq --skip-broken $klt_pkgs >/dev/null || exitC=1
@@ -115,7 +115,7 @@ __run_grub() {
   grub_cfg="$(find /boot/grub*/* -name 'grub*.cfg' | grep -- '^' || false)"
   grub_efi="$(find /boot/efi/EFI/* -name 'grub*.cfg' | grep -- '^' || false)"
   grub_bin="$(builtin type -P grub-mkconfig 2>/dev/null || builtin type -P grub2-mkconfig 2>/dev/null || false)"
-  grub_bin_name="$(basename "$grub_bin" 2>/dev/null)"
+  grub_bin_name="${grub_bin##*/}"
   if [ -n "$grub_bin" ]; then
     for opt in 'biosdevname=0' 'net.ifnames=0'; do
       if ! grep -shq -- "$opt" '/etc/default/grub'; then
@@ -156,18 +156,18 @@ __rm_if_exists() {
   done
 }
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-__systemctl_restart() { systemctl is-active "$1" >/dev/null 2>&1 && systemctl restart "$1" >/dev/null 2>&1 || return 5; }
+__systemctl_restart() { systemctl is-active "$1" >/dev/null 2>&1 && systemctl restart "$1" >/dev/null 2>&1 || return 1; }
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 __get_www_user() {
   local user=""
   user="$(grep -sh -- "www-data" "/etc/passwd" || grep -sh -- "apache" "/etc/passwd" || grep -sh -- "nginx" "/etc/passwd")"
-  [ -n "$user" ] && echo "$user" | awk -F ':' '{print $1}' || return 9
+  [ -n "$user" ] && echo "$user" | awk -F ':' '{print $1}' || return 1
 }
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 __get_www_group() {
   local group=""
   group="$(grep -sh -- "www-data" "/etc/group" || grep -sh -- "apache" "/etc/group" || grep -sh -- "nginx" "/etc/group")"
-  [ -n "$group" ] && echo "$group" | awk -F ':' '{print $1}' || return 9
+  [ -n "$group" ] && echo "$group" | awk -F ':' '{print $1}' || return 1
 }
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 __show_help() {
@@ -189,17 +189,31 @@ EOF
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 echo "$PATH" | grep -q -- "/root/.local/bin" || export PATH="/root/.local/bin:$PATH"
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-NC="$(tput sgr0 2>/dev/null)"
-BLACK="\033[0;30m"    # Black
-RED="\033[0;31m"      # Red
-GREEN="\033[0;32m"    # Green
-YELLOW="\033[0;33m"   # Yellow
-BLUE="\033[0;34m"     # Blue
-PURPLE="\033[0;35m"   # Purple
-CYAN="\033[0;36m"     # Cyan
-WHITE="\033[0;37m"    # White
-ORANGE="\033[0;33m"   # Orange
-LIGHTRED='\033[1;31m' # Light Red
+if [ -n "${NO_COLOR+x}" ]; then
+  NC="" BLACK="" RED="" GREEN="" YELLOW="" BLUE="" PURPLE="" CYAN="" WHITE="" ORANGE="" LIGHTRED=""
+else
+  NC="$(tput sgr0 2>/dev/null)"
+  # Black
+  BLACK="\033[0;30m"
+  # Red
+  RED="\033[0;31m"
+  # Green
+  GREEN="\033[0;32m"
+  # Yellow
+  YELLOW="\033[0;33m"
+  # Blue
+  BLUE="\033[0;34m"
+  # Purple
+  PURPLE="\033[0;35m"
+  # Cyan
+  CYAN="\033[0;36m"
+  # White
+  WHITE="\033[0;37m"
+  # Orange
+  ORANGE="\033[0;33m"
+  # Light Red
+  LIGHTRED='\033[1;31m'
+fi
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DATE="$(date +'%y-%m-%d at %H:%M')"
 LOG_FILE="${TMPDIR:-/tmp}/$APPNAME.log"
@@ -336,7 +350,7 @@ if [ "$SCRIPTS_UPDATE" = "true" ]; then
     echo "Updating scripts to version $REMOTE_VERSION from $INSTALLED_VERSION"
   fi
   for file in $file_list; do
-    filename="$(basename "$file")"
+    filename="${file##*/}"
     echo "Updating $filename in /root/.local/bin"
     __run_updater "$RAW_REPO_URL" "$filename" || exitCode=$(($exitCode + 1))
   done
@@ -523,7 +537,7 @@ else
   echo -e "\nCopying the files from config dir to system dir"
   for sys_dir in root etc usr var; do
     for new_conf in "$APP_TMP_DIR/$sys_dir"/*; do
-      etc_dir="/$sys_dir/$(basename -- "$new_conf")"
+      etc_dir="/$sys_dir/${new_conf##*/}"
       if [ -d "$new_conf" ]; then
         echo -e "$new_conf/. >$etc_dir/"
         cp -Rfa "$new_conf/." "$etc_dir/" 2>/dev/null
@@ -645,7 +659,7 @@ else
   fi
 
   echo -e "Setting up the ssl certs"
-  LE_CERTS_EXIST="$(\find "/etc/letsencrypt/live"/* -maxdepth 0 -type 'd,l' 2>/dev/null | grep -v -- "README" | grep -- '^' || return)"
+  LE_CERTS_EXIST="$(\find "/etc/letsencrypt/live"/* -maxdepth 0 -type 'd,l' 2>/dev/null | grep -v -- "README" | grep -- '^' || return 1)"
   [ -f "/etc/bind/certbot-update.conf" ] && chmod 600 /etc/bind/certbot-update.conf
   if [ -n "$LE_CERTS_EXIST" ]; then
     if [ -d "/etc/letsencrypt/renewal-hooks/post" ]; then

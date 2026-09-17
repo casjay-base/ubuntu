@@ -54,13 +54,13 @@ __kernel_exclude_args() {
 }
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 __backup_repo_files() {
-  [ -d "$BACKUP_DIR" ] || mkdir -p "$BACKUP_DIR"
-  cp -Rf "/etc/yum.repos.d/." "$BACKUP_DIR" 2>/dev/null || return 0
+  [ -d "$FETCH_REPO_FILE_BACKUP_DIR" ] || mkdir -p "$FETCH_REPO_FILE_BACKUP_DIR"
+  cp -Rf "/etc/yum.repos.d/." "$FETCH_REPO_FILE_BACKUP_DIR" 2>/dev/null || return 0
 }
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 __restore_repo_files() {
-  [ -n "$(ls -A "$BACKUP_DIR/" 2>/dev/null)" ] || return 0
-  cp -Rf "$BACKUP_DIR/${1:-}"* "/etc/yum.repos.d/" 2>/dev/null || return 0
+  [ -n "$(ls -A "$FETCH_REPO_FILE_BACKUP_DIR/" 2>/dev/null)" ] || return 0
+  cp -Rf "$FETCH_REPO_FILE_BACKUP_DIR/${1:-}"* "/etc/yum.repos.d/" 2>/dev/null || return 0
 }
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Define variables
@@ -69,7 +69,7 @@ DEFAULT_COLOR="254"
 SET_DAY="$(date +'%d')"
 SET_MONTH="$(date +'%m')"
 FETCH_REPO_FILE_EXIT_STATUS=0
-BACKUP_DIR="${BACKUP_DIR:-$HOME/.local/backups/$APPNAME}/repos/$SET_MONTH/$SET_DAY"
+FETCH_REPO_FILE_BACKUP_DIR="${FETCH_REPO_FILE_BACKUP_DIR:-$HOME/.local/backups/$APPNAME}/repos/$SET_MONTH/$SET_DAY"
 RELEASE_VER="$(grep --no-filename -s -- 'VERSION_ID=' /etc/*-release | awk -F '=' '{print $2}' | sed 's#"##g' | awk -F '.' '{print $1}' | grep -- '^')"
 RELEASE_NAME="$(grep --no-filename -s -- '^NAME=' /etc/*-release | awk -F'=' '{print $2}' | sed 's|"||g;s| .*||g' | tr '[:upper:]' '[:lower:]' | grep -- '^')"
 RELEASE_TYPE="$(grep --no-filename -s -- '^ID_LIKE=' /etc/*-release | awk -F'=' '{print $2}' | sed 's|"||g' | tr '[:upper:]' '[:lower:]' | tr ' ' '\n' | grep -- 'centos' | grep -- '^')"
