@@ -25,7 +25,7 @@
 # shellcheck disable=SC2199
 # shellcheck disable=SC2317
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-APPNAME="$(basename "$0" 2>/dev/null)"
+APPNAME="${0##*/}"
 VERSION="202308230150-git"
 RUN_USER="$USER"
 SET_UID="$(id -u)"
@@ -46,7 +46,7 @@ __function_exists() { builtin type $1 >/dev/null 2>&1 || return 1; }
 # custom functions
 __save_remote_file() { curl -q -SLs "$1" | tee "$2" >/dev/null 2>&1 || return 1; }
 __rm_repo_files() { [ "${1:-$YUM_DELETE}" = "yes" ] && rm -Rf "/etc/yum.repos.d"/* >/dev/null 2>&1 || return 0; }
-__has_alt_kernel() { rpm -qa 2>/dev/null | grep -qE '^kernel-(ml|lt)-'; }
+__has_alt_kernel() { rpm -qa 2>/dev/null | grep -qE -- '^kernel-(ml|lt)-'; }
 __kernel_exclude_args() {
   __has_alt_kernel || return 0
   # Only the base kernel boot/module packages. kernel-tools, kernel-headers, kernel-devel, etc. update normally.
@@ -70,9 +70,9 @@ SET_DAY="$(date +'%d')"
 SET_MONTH="$(date +'%m')"
 FETCH_REPO_FILE_EXIT_STATUS=0
 BACKUP_DIR="${BACKUP_DIR:-$HOME/.local/backups/$APPNAME}/repos/$SET_MONTH/$SET_DAY"
-RELEASE_VER="$(grep --no-filename -s 'VERSION_ID=' /etc/*-release | awk -F '=' '{print $2}' | sed 's#"##g' | awk -F '.' '{print $1}' | grep '^')"
-RELEASE_NAME="$(grep --no-filename -s '^NAME=' /etc/*-release | awk -F'=' '{print $2}' | sed 's|"||g;s| .*||g' | tr '[:upper:]' '[:lower:]' | grep '^')"
-RELEASE_TYPE="$(grep --no-filename -s '^ID_LIKE=' /etc/*-release | awk -F'=' '{print $2}' | sed 's|"||g' | tr '[:upper:]' '[:lower:]' | tr ' ' '\n' | grep 'centos' | grep '^')"
+RELEASE_VER="$(grep --no-filename -s -- 'VERSION_ID=' /etc/*-release | awk -F '=' '{print $2}' | sed 's#"##g' | awk -F '.' '{print $1}' | grep -- '^')"
+RELEASE_NAME="$(grep --no-filename -s -- '^NAME=' /etc/*-release | awk -F'=' '{print $2}' | sed 's|"||g;s| .*||g' | tr '[:upper:]' '[:lower:]' | grep -- '^')"
+RELEASE_TYPE="$(grep --no-filename -s -- '^ID_LIKE=' /etc/*-release | awk -F'=' '{print $2}' | sed 's|"||g' | tr '[:upper:]' '[:lower:]' | tr ' ' '\n' | grep -- 'centos' | grep -- '^')"
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Main application
 __save_remote_file "https://raw.githubusercontent.com/rpm-devel/casjay-release/main/RPM-GPG-KEY-casjay" "/etc/pki/rpm-gpg/RPM-GPG-KEY-casjay"
@@ -115,7 +115,7 @@ if [ -n "$RELEASE_FILE" ]; then
   yum makecache -y >/dev/null 2>&1 || FETCH_REPO_FILE_EXIT_STATUS=1
 fi
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-if grep -sq "^SELINUX=" "/etc/selinux/config"; then
+if grep -sq -- "^SELINUX=" "/etc/selinux/config"; then
   sed -i "^SELINUX=" "SELINUX=disabled" "/etc/selinux/config" 2>/dev/null
 fi
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

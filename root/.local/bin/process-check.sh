@@ -18,7 +18,7 @@
 # @@sudo/root        :  no
 # @@Template         :  shell/sh
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-APPNAME="$(basename "$0" 2>/dev/null)"
+APPNAME="${0##*/}"
 VERSION="202305090019-git"
 HOME="${USER_HOME:-$HOME}"
 USER="${SUDO_USER:-$USER}"
@@ -39,12 +39,12 @@ PROCS="nginx httpd postfix crond dockerd sshd php-fpm "
 __check_url() { curl -q -LSsfI --max-time 3 --max-time 2 --retry 1 "$1" >/dev/null 2>&1 || return 1; }
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 __proc_check() {
-  proc="$(ps aux 2>&1 | grep -v 'grep' | grep -w "$1" | head -n1 | grep -q "$1" && echo "$1" || false)"
+  proc="$(ps aux 2>&1 | grep -v -- 'grep' | grep -w -- "$1" | head -n1 | grep -q -- "$1" && echo "$1" || false)"
   [ -n "$proc" ] || return 1
 }
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 __get_proc_port() {
-  port="$(netstat -tapln | grep "$1" | tr ' ' '\n' | grep -v '^$' | grep ':[0-9]' | head -n 1 | sed 's|.*:||g' | head -n1 | grep '[0-9]' || false)"
+  port="$(netstat -tapln | grep -- "$1" | tr ' ' '\n' | grep -v -- '^$' | grep -- ':[0-9]' | head -n 1 | sed 's|.*:||g' | head -n1 | grep -- '[0-9]' || false)"
   [ -n "$port" ] && printf '%s\n' "$port" || return 1
 }
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -56,7 +56,7 @@ __website_check() {
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 __service_restart() {
   exitcode=0
-  systemctl list-unit-files | grep -qw "$1" || return 0
+  systemctl list-unit-files | grep -qw -- "$1" || return 0
   systemctl restart "$1" &>/dev/null 2>&1
   systemctl is-active "$1" &>/dev/null || exitcode=1
   return $exitcode
@@ -70,15 +70,15 @@ exitnginxCode=0
 # get apache domains and port
 if [ -d "/etc/apache2" ] && __proc_check "httpd"; then
   set_httpd_proto="http"
-  get_httpd_domains="$(grep --no-filename -R 'ServerName ' /etc/apache2 | grep -Ev '#|localhost|unknown' | sed 's|.* ||g;s|;||g;s|server_name ||g' | grep -v '\*' | grep '[a-z0-9]' | sort -u | grep '^' || echo '')"
-  get_httpd_port="$(grep -R --no-filename 'Listen ' /etc/apache2/conf/httpd.conf | grep -v '#' | awk -F ' ' '{print $2}' | sort -u | head -n1 | grep '^' || echo '')"
+  get_httpd_domains="$(grep --no-filename -R -- 'ServerName ' /etc/apache2 | grep -Ev -- '#|localhost|unknown' | sed 's|.* ||g;s|;||g;s|server_name ||g' | grep -v -- '\*' | grep -- '[a-z0-9]' | sort -u | grep -- '^' || echo '')"
+  get_httpd_port="$(grep -R --no-filename -- 'Listen ' /etc/apache2/conf/httpd.conf | grep -v -- '#' | awk -F ' ' '{print $2}' | sort -u | head -n1 | grep -- '^' || echo '')"
 fi
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # get nginx domains and port
 if [ -d "/etc/nginx" ] && __proc_check "nginx"; then
   set_nginx_proto="https"
-  get_nginx_domains="$(grep -R --no-filename 'server_name ' /etc/nginx | grep -Ev '#|localhost|unknown' | sed 's|.* ||g;s|;||g;s|server_name ||g' | grep -v '\*' | grep '[a-z0-9]' | sort -u | grep '^' || echo '')"
-  get_nginx_port="$(grep -R --no-filename 'listen ' /etc/nginx | grep ' [0-9][0-9]' | awk -F ' ' '{print $2}' | sort -u | head -n1 | grep '^' || echo '')"
+  get_nginx_domains="$(grep -R --no-filename -- 'server_name ' /etc/nginx | grep -Ev -- '#|localhost|unknown' | sed 's|.* ||g;s|;||g;s|server_name ||g' | grep -v -- '\*' | grep -- '[a-z0-9]' | sort -u | grep -- '^' || echo '')"
+  get_nginx_port="$(grep -R --no-filename -- 'listen ' /etc/nginx | grep -- ' [0-9][0-9]' | awk -F ' ' '{print $2}' | sort -u | head -n1 | grep -- '^' || echo '')"
 fi
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # check and restart broken processes

@@ -18,6 +18,8 @@
 # @@sudo/root        :  no
 # @@Template         :  shell/sh
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+VERSION="202305090019-git"
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 __certbot_api_check() { [ -n "$CERTBOT_API_KEY" ] && return 0 || return 1; }
 __certbot_renew() { eval $CERTBOT_BIN renew --agree-tos --expand --dns-rfc2136 --dns-rfc2136-credentials "$CERTBOT_FILE"; }
 __certbot_test() { eval $CERTBOT_BIN renew --dry-run --agree-tos --expand --dns-rfc2136 --dns-rfc2136-credentials "$CERTBOT_FILE" || return 1; }
@@ -47,7 +49,7 @@ fi
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 CERTBOT_FILE="${CERTBOT_FILE:-}"
 CERTBOT_KEY_FILE="${CERTBOT_KEY_FILE:-/root/.config/certbot/dns_rfc2136_secret}"
-CERTBOT_KEY_ENV="${CERTBOT_KEY_ENV:-$(grep -s 'dns_rfc2136_secret = ' "$CERTBOT_FILE" 2>/dev/null | awk -F' = ' '{print $2}' | grep '^' || false)}"
+CERTBOT_KEY_ENV="${CERTBOT_KEY_ENV:-$(grep -s -- 'dns_rfc2136_secret = ' "$CERTBOT_FILE" 2>/dev/null | awk -F' = ' '{print $2}' | grep -- '^' || false)}"
 CERTBOT_API_KEY="${CERTBOT_API_KEY:-$CERTBOT_KEY_ENV}"
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 if [ -z "${CERTBOT3_BIN:-$CERTBOT_BIN}" ]; then

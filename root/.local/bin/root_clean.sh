@@ -17,6 +17,10 @@
 # @@sudo/root        :  no
 # @@Template         :  bash/system
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-[ -f "/etc/logrotate.d/btmp" ] && rm -Rf "/etc/logrotate.d/btmp" # added in /etc/logrotate.conf
-[ -f "/etc/logrotate.d/wtmp" ] && rm -Rf "/etc/logrotate.d/wtmp" # added in /etc/logrotate.conf
+VERSION="202305090019-git"
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# added in /etc/logrotate.conf
+[ -f "/etc/logrotate.d/btmp" ] && rm -Rf "/etc/logrotate.d/btmp"
+# added in /etc/logrotate.conf
+[ -f "/etc/logrotate.d/wtmp" ] && rm -Rf "/etc/logrotate.d/wtmp"
 [ -z "$(builtin type -P clean-system 2>/dev/null)" ] || clean-system --raw

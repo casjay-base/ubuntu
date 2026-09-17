@@ -17,6 +17,8 @@
 # @@sudo/root        :  no
 # @@Template         :  bash/system
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+VERSION="202609131048-git"
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 __fetch() {
   curl -q -LSsf "https://github.com/casjay-base/rhel/raw/main/etc/resolv.conf" -o "/tmp/resolv.conf"
   return $?
@@ -56,6 +58,6 @@ fi
 [ -f "/etc/resolv.conf" ] || __default_resolv
 [ -f "/etc/resolv.conf" ] && chattr +i "/etc/resolv.conf"
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-exit
+exit 0
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # end
