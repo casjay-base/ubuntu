@@ -49,7 +49,6 @@ logpath  = /var/log/auth.log
 enabled  = true
 filter   = proftpd
 action   = %(banaction)s
-logpath  = /var/log/auth.log
 logpath  = /var/log/proftpd/auth.log
 
 [postfix]

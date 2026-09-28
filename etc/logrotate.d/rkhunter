@@ -1,0 +1,9 @@
+# rkhunter only writes this log when it actually runs a scan, so it may
+# not exist yet on a fresh install - missingok avoids a hard logrotate
+# failure ("stat ... failed: No such file or directory") until it does
+/var/log/rkhunter/rkhunter.log {
+    missingok
+    weekly
+    notifempty
+    create 640 root root
+}
