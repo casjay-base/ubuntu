@@ -1,9 +1,9 @@
 # *REQUIRED*
 MAIL_DIR           Maildir/
-PASS_MAX_DAYS      99999
-PASS_MIN_DAYS      0
-PASS_MIN_LEN       8
-PASS_WARN_AGE      7
+PASS_MAX_DAYS      9999
+PASS_MIN_DAYS      1
+PASS_MIN_LEN       12
+PASS_WARN_AGE      12
 UID_MIN            10000
 UID_MAX            50000
 GID_MIN            10000

@@ -18,7 +18,6 @@
 # @@Template         :  bash/system
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 VERSION="202609131048-git"
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 __fetch() {
   curl -q -LSsf "https://github.com/casjay-base/rhel/raw/main/etc/resolv.conf" -o "/tmp/resolv.conf"
   return $?

@@ -24,8 +24,11 @@ CookieAuthFileGroupReadable 1
 # not advertised to the Tor network. Bound to loopback + all
 # interfaces for LAN reach; SocksPolicy restricts SOCKS to
 # loopback + private ranges. HTTPTunnelPort/DNSPort have no
-# equivalent Tor-side ACL directive — the host firewall must
-# restrict ports 9080/9053 to the same private ranges.
+# equivalent Tor-side ACL directive, so firewalld is what keeps
+# them closed: neither 9080 nor 9053 is listed in
+# firewalld/zones/public.xml (the default zone, deny-by-default)
+# nor in docker.xml (target REJECT), so both stay unreachable
+# from every network. Never add them to a zone.
 # =========================================================
 SOCKSPort                   0.0.0.0:9050 IsolateDestAddr IsolateDestPort
 SOCKSPort                   [::]:9050    IsolateDestAddr IsolateDestPort

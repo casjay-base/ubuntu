@@ -1,7 +1,15 @@
+# Every CHANGEME_AT_BOOTSTRAP below is a deliberately non-functional token, not
+# a working default - this file is world-readable in a public repo, so no real
+# credential may ever be committed here. Replace them on the host after
+# install (or drop the whole section for a service you do not monitor); the
+# plugin fails to connect and reports nothing until you do, which is the
+# intended loud failure. Previously these shipped as literal working-looking
+# passwords that deployed verbatim.
+
 [*]
 user root
 env.username root
-env.password mysecurepassword
+env.password CHANGEME_AT_BOOTSTRAP
 env.host myserverdomainname
 
 [amavis]
@@ -11,7 +19,7 @@ env.amavislog /var/log/mail.log
 
 [mysql*]
 env.mysqluser root
-env.mysqlpassword mysecurepassword
+env.mysqlpassword CHANGEME_AT_BOOTSTRAP
 
 [disk*]
 user root
@@ -36,7 +44,7 @@ user munin
 [postgres*]
 user postgres
 env.PGUSER administrator
-env.PGPASS mysecurepassword
+env.PGPASS CHANGEME_AT_BOOTSTRAP
 env.PGPORT 5432
 
 [ip_*]
@@ -57,14 +65,14 @@ env.socketfile /var/run/radiusd/radiusd.sock
 user ldap
 group ldap
 env.binddn cn=administrator,dc=localhost
-env.bindpw mysecurepassword
+env.bindpw CHANGEME_AT_BOOTSTRAP
 env.dbstat /usr/bin/db_stat
 
 [squid*]
 env.squidhost localhost
 env.squidport 3127
 env.squiduser root
-env.squidpassword mysecurepassword
+env.squidpassword CHANGEME_AT_BOOTSTRAP
 
 [cup*]
 user root
@@ -74,7 +82,7 @@ user root
 env.host localhost
 env.port 5038
 env.username admin
-env.secret amp111
+env.secret CHANGEME_AT_BOOTSTRAP
 env.channels IAX2 SIP
 
 [df*]
@@ -112,6 +120,6 @@ env.community public
 
 [esx_*]
 env.user administrator
-env.pass mysecurepassword
+env.pass CHANGEME_AT_BOOTSTRAP
 env.vCenter vcenter
 

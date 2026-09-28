@@ -1,0 +1,14 @@
+# Security tier - this is also what the [recidive] jail reads, so keep the
+# rotated copies around instead of discarding them
+/var/log/fail2ban.log {
+    missingok
+    notifempty
+    monthly
+    maxsize 100M
+    maxage 180
+    rotate 12
+    nocompress
+    postrotate
+        /usr/bin/fail2ban-client flushlogs > /dev/null 2>&1 || true
+    endscript
+}

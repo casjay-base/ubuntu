@@ -1,0 +1,28 @@
+# Operational logs - discarded on rotation like the rest of the tree
+/var/log/proftpd/error.log /var/log/proftpd/xfers.log /var/log/proftpd/proftpd.log /var/log/proftpd/access.log {
+    missingok
+    notifempty
+    sharedscripts
+    monthly
+    maxsize 50M
+    rotate 0
+    nocompress
+    postrotate
+        /usr/bin/systemctl reload proftpd.service > /dev/null 2>&1 || true
+    endscript
+}
+
+# Authentication log - security tier, kept 180 days rather than discarded
+/var/log/proftpd/auth.log {
+    missingok
+    notifempty
+    sharedscripts
+    monthly
+    maxsize 100M
+    maxage 180
+    rotate 12
+    nocompress
+    postrotate
+        /usr/bin/systemctl reload proftpd.service > /dev/null 2>&1 || true
+    endscript
+}

@@ -1,0 +1,19 @@
+# Replaces the stock rsyslog stanza, which also listed /var/log/mail.log and
+# /var/log/auth.log. Those are defined in /etc/logrotate.conf instead, and a path
+# defined in two places makes logrotate abort this entire file - which left
+# cron, messages and spooler unrotated. Do not re-add them here.
+/var/log/cron
+/var/log/messages
+/var/log/spooler
+{
+    missingok
+    notifempty
+    monthly
+    maxsize 100M
+    rotate 0
+    nocompress
+    sharedscripts
+    postrotate
+        /usr/bin/systemctl -s HUP kill rsyslog.service >/dev/null 2>&1 || true
+    endscript
+}

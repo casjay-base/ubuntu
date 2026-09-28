@@ -4,7 +4,8 @@
         missingok
         notifempty
         copytruncate
-        postrotate
-            systemctl restart munin munin-node > /dev/null 2>&1 || true
-        endscript
+        monthly
+        maxsize 50M
+        rotate 0
+        nocompress
 }

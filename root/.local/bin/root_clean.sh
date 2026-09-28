@@ -18,7 +18,6 @@
 # @@Template         :  bash/system
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 VERSION="202305090019-git"
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # added in /etc/logrotate.conf
 [ -f "/etc/logrotate.d/btmp" ] && rm -Rf "/etc/logrotate.d/btmp"
 # added in /etc/logrotate.conf

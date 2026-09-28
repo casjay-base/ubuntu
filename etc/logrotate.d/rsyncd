@@ -1,0 +1,11 @@
+# Records every module access including auth failures - security tier
+/var/log/rsyncd.log {
+    missingok
+    notifempty
+    monthly
+    maxsize 100M
+    maxage 180
+    rotate 12
+    nocompress
+    copytruncate
+}

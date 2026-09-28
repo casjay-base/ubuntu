@@ -68,3 +68,4 @@ unset i
 unset -f pathmunge
 
 export PATH USER LOGNAME MAIL MAILDIR HOSTNAME HISTSIZE HISTCONTROL
+

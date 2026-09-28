@@ -1,0 +1,12 @@
+/var/log/samba/*.log {
+    missingok
+    notifempty
+    sharedscripts
+    monthly
+    maxsize 50M
+    rotate 0
+    nocompress
+    postrotate
+        /usr/bin/systemctl reload smb.service > /dev/null 2>&1 || true
+    endscript
+}

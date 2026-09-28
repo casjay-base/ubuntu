@@ -1,0 +1,12 @@
+/var/log/nginx/*.log {
+    missingok
+    notifempty
+    sharedscripts
+    monthly
+    maxsize 100M
+    rotate 0
+    nocompress
+    postrotate
+        /usr/bin/systemctl reload nginx.service > /dev/null 2>&1 || true
+    endscript
+}

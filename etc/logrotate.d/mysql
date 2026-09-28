@@ -1,0 +1,14 @@
+# Paths match the *_file directives in /etc/my.cnf. copytruncate is used
+# instead of a postrotate flush so no mysql credentials are needed here, and no
+# "create" line so the stanza still parses on a host without the mysql user -
+# logrotate treats an unknown user as fatal and skips the whole file.
+/var/log/mysql/*.log {
+    missingok
+    notifempty
+    sharedscripts
+    monthly
+    maxsize 100M
+    rotate 0
+    nocompress
+    copytruncate
+}

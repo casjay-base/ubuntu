@@ -19,14 +19,14 @@
 # @@Template         :  shell/sh
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 VERSION="202305090019-git"
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 __certbot_api_check() { [ -n "$CERTBOT_API_KEY" ] && return 0 || return 1; }
-__certbot_renew() { eval $CERTBOT_BIN renew --agree-tos --expand --dns-rfc2136 --dns-rfc2136-credentials "$CERTBOT_FILE"; }
-__certbot_test() { eval $CERTBOT_BIN renew --dry-run --agree-tos --expand --dns-rfc2136 --dns-rfc2136-credentials "$CERTBOT_FILE" || return 1; }
+__certbot_renew() { eval "$CERTBOT_BIN" renew --agree-tos --expand --dns-rfc2136 --dns-rfc2136-credentials "$CERTBOT_FILE"; }
+__certbot_test() { eval "$CERTBOT_BIN" renew --dry-run --agree-tos --expand --dns-rfc2136 --dns-rfc2136-credentials "$CERTBOT_FILE" || return 1; }
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 __certbot_new() {
   local domains="$*"
-  certbot certonly -n --agree-tos -m "casjay+ssl@gmail.com" --expand --dns-rfc2136 --dns-rfc2136-credentials $CERTBOT_FILE --key-path "$SSL_KEY" --fullchain-path "$SSL_CERT" $domains || return 1
+  certbot certonly -n --agree-tos -m "casjay+ssl@gmail.com" --expand --dns-rfc2136 --dns-rfc2136-credentials "$CERTBOT_FILE" \
+    --key-path "$SSL_KEY" --fullchain-path "$SSL_CERT" $domains || return 1
   [ -d "$SSL_DIR/$1" ] && [ ! -d "$SSL_DIR/domain" ] && ln -sf "$SSL_DIR/$1" "$SSL_DIR/domain"
   [ -d "$SSL_DIR/domain" ] || return 1
 }
@@ -63,7 +63,8 @@ if [ -n "$CERTBOT3_BIN" ] && [ -z "$CERTBOT_BIN" ]; then
 fi
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 if __certbot_api_check; then
-  sed -i 's|dns_rfc2136_secret.*|dns_rfc2136_secret = '$CERTBOT_API_KEY'|g' "$CERTBOT_FILE"
+  CERTBOT_API_KEY_ESCAPED="$(printf '%s' "$CERTBOT_API_KEY" | sed 's/[&|\\]/\\&/g')"
+  sed -i "s|dns_rfc2136_secret.*|dns_rfc2136_secret = $CERTBOT_API_KEY_ESCAPED|g" "$CERTBOT_FILE"
 fi
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 if __certbot_api_check; then

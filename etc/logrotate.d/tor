@@ -1,0 +1,13 @@
+# No "su"/"create" line naming the tor user - logrotate treats an unknown user
+# as fatal and skips the whole file on a host where tor is not installed.
+# copytruncate keeps the running daemon writing to the same inode instead.
+/var/log/tor/*.log {
+    missingok
+    notifempty
+    sharedscripts
+    monthly
+    maxsize 10M
+    rotate 0
+    nocompress
+    copytruncate
+}

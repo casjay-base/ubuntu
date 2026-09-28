@@ -1,0 +1,12 @@
+/var/log/php-fpm/*.log {
+    missingok
+    notifempty
+    sharedscripts
+    monthly
+    maxsize 50M
+    rotate 0
+    nocompress
+    postrotate
+        /usr/bin/systemctl reload php-fpm.service > /dev/null 2>&1 || true
+    endscript
+}
