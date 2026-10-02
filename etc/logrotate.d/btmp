@@ -1,6 +1,1 @@
-# Intentionally empty. The logrotate package ships its own default
-# rotation stanza at this path; our own, better-tuned rotation for
-# /var/log/btmp lives inline in /etc/logrotate.conf (monthly, size cap,
-# maxage retention). logrotate treats the same path defined twice as a
-# fatal "duplicate log entry" error, so this file is kept empty and
-# synced over the package's copy every deploy to prevent that collision.
+# Intentionally empty - overrides the package's own btmp stanza, which collides with etc/logrotate.conf's.

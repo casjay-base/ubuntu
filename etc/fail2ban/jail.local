@@ -26,13 +26,7 @@ findtime  = 3600
 maxretry = 5
 backend = auto
 usedns = warn
-# jail.conf's stock banaction (firewallcmd-ipset) requires firewall-cmd,
-# which doesn't exist on this ufw-based distro - actionban would fail
-# silently and bans would never actually take effect. ufw is fail2ban's
-# own native integration for this firewall; blocktype=deny (ufw's own
-# terminology for a silent DROP - "reject" is the one that replies and
-# confirms something is listening) matches the "DROP not REJECT"
-# firewall policy.
+# DROP not REJECT (stock default) so a ban gives no reply; sync.sh translates this line per distro, don't copy verbatim.
 banaction = ufw[blocktype=deny]
 # Merged from the former etc/fail2ban/ips.txt (removed - fail2ban never
 # auto-loads a bare .txt file, so that file was dead configuration; folding

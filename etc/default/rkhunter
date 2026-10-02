@@ -1,0 +1,13 @@
+# System configuration file for Rootkit Hunter which
+# stores RPM system specifics for cron run, etc.
+#
+#    MAILTO= <email address to send scan report>
+# DIAG_SCAN= no  - perform  normal  report scan
+#            yes - perform detailed report scan
+#                  (includes application check)
+
+# $HOSTNAME is expanded by the sourcing shell (same convention as
+# etc/crontab's MAILTO=no-reply@$HOSTNAME) - this server only has a
+# root account, so warnings go to root's local mailbox.
+MAILTO=root@$HOSTNAME
+DIAG_SCAN=no

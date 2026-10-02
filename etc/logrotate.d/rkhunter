@@ -1,6 +1,4 @@
-# rkhunter only writes this log when it actually runs a scan, so it may
-# not exist yet on a fresh install - missingok avoids a hard logrotate
-# failure ("stat ... failed: No such file or directory") until it does
+# missingok avoids a hard failure on a fresh install before rkhunter's first scan creates this log.
 /var/log/rkhunter/rkhunter.log {
     missingok
     weekly

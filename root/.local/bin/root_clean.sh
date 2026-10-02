@@ -18,8 +18,5 @@
 # @@Template         :  bash/system
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 VERSION="202305090019-git"
-# etc/logrotate.d/btmp and etc/logrotate.d/wtmp are now shipped as
-# intentionally-empty overrides (see those files) so the deploy sync
-# neutralizes the logrotate package's own stanzas at those paths - no
-# runtime cleanup needed here any more
+# etc/logrotate.d/btmp and wtmp now ship as empty overrides, so this cleanup is no longer needed.
 [ -z "$(builtin type -P clean-system 2>/dev/null)" ] || clean-system --raw
